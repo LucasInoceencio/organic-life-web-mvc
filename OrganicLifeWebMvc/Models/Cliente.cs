@@ -22,7 +22,7 @@ namespace OrganicLifeWebMvc.Models
         public double TotalCompras(DateTime dataInicial, DateTime dataFinal)
         {
             return Compras.Where(wh => wh.DataHoraCadastro >= dataInicial && wh.DataHoraCadastro <= dataFinal)
-                .Sum(sm => sm.ValorTotal);
+                .Sum(sm => sm.ValorTotal());
         }
     }
 }

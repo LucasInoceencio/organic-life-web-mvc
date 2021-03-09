@@ -14,11 +14,11 @@ namespace OrganicLifeWebMvc.Data
         {
         }
         public DbSet<Cliente> Cliente { get; set; }
-        public DbSet<Cliente> Endereco { get; set; }
-        public DbSet<Cliente> Fornecedor { get; set; }
-        public DbSet<Cliente> Pessoa { get; set; }
-        public DbSet<Cliente> PessoaJuridica { get; set; }
-        public DbSet<Cliente> Produto { get; set; }
-        public DbSet<Cliente> Venda { get; set; }
+        public DbSet<Endereco> Endereco { get; set; }
+        public DbSet<Fornecedor> Fornecedor { get; set; }
+        public DbSet<Pessoa> Pessoa { get; set; }
+        public DbSet<PessoaJuridica> PessoaJuridica { get; set; }
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<Venda> Venda { get; set; }
     }
 }
