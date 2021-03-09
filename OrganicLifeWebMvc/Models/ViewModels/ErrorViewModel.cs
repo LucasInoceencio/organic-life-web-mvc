@@ -1,6 +1,6 @@
 using System;
 
-namespace OrganicLifeWebMvc.Models
+namespace OrganicLifeWebMvc.Models.ViewModels
 {
     public class ErrorViewModel
     {

@@ -15,5 +15,21 @@ namespace OrganicLifeWebMvc.Models
         public string Telefone { get; set; }
         public string Celular { get; set; }
         public Pessoa Responsavel { get; set; }
+
+        public PessoaJuridica() 
+        {
+        }
+
+        public PessoaJuridica(string razaoSocial, string nomeFantasia, string cnpj, Endereco endereco, string email, string telefone, string celular, Pessoa responsavel)
+        {
+            RazaoSocial = razaoSocial;
+            NomeFantasia = nomeFantasia;
+            Cnpj = cnpj;
+            Endereco = endereco;
+            Email = email;
+            Telefone = telefone;
+            Celular = celular;
+            Responsavel = responsavel;
+        }
     }
 }

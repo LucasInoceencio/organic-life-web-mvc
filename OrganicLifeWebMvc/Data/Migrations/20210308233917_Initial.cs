@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace OrganicLifeWebMvc.Data.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,11 +48,33 @@ namespace OrganicLifeWebMvc.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Endereco",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DataHoraCadastro = table.Column<DateTime>(nullable: false),
+                    ResponsavelCadastro = table.Column<string>(nullable: true),
+                    DataHoraAlteracao = table.Column<DateTime>(nullable: true),
+                    ResponsavelAlteracao = table.Column<string>(nullable: true),
+                    Logradouro = table.Column<string>(nullable: true),
+                    Bairro = table.Column<string>(nullable: true),
+                    Numero = table.Column<string>(nullable: true),
+                    Cidade = table.Column<string>(nullable: true),
+                    Estado = table.Column<string>(nullable: true),
+                    Cep = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Endereco", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +95,7 @@ namespace OrganicLifeWebMvc.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +175,59 @@ namespace OrganicLifeWebMvc.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Pessoa",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DataHoraCadastro = table.Column<DateTime>(nullable: false),
+                    ResponsavelCadastro = table.Column<string>(nullable: true),
+                    DataHoraAlteracao = table.Column<DateTime>(nullable: true),
+                    ResponsavelAlteracao = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(nullable: true),
+                    Cpf = table.Column<string>(nullable: true),
+                    Rg = table.Column<string>(nullable: true),
+                    DataNascimento = table.Column<DateTime>(nullable: false),
+                    EnderecoId = table.Column<int>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Celular = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pessoa", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pessoa_Endereco_EnderecoId",
+                        column: x => x.EnderecoId,
+                        principalTable: "Endereco",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cliente",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DataHoraCadastro = table.Column<DateTime>(nullable: false),
+                    ResponsavelCadastro = table.Column<string>(nullable: true),
+                    DataHoraAlteracao = table.Column<DateTime>(nullable: true),
+                    ResponsavelAlteracao = table.Column<string>(nullable: true),
+                    PessoaId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cliente_Pessoa_PessoaId",
+                        column: x => x.PessoaId,
+                        principalTable: "Pessoa",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -162,8 +237,7 @@ namespace OrganicLifeWebMvc.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -189,8 +263,17 @@ namespace OrganicLifeWebMvc.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cliente_PessoaId",
+                table: "Cliente",
+                column: "PessoaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pessoa_EnderecoId",
+                table: "Pessoa",
+                column: "EnderecoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,10 +294,19 @@ namespace OrganicLifeWebMvc.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Cliente");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Pessoa");
+
+            migrationBuilder.DropTable(
+                name: "Endereco");
         }
     }
 }

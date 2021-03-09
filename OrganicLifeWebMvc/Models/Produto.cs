@@ -20,5 +20,19 @@ namespace OrganicLifeWebMvc.Models
         public double Valor { get; set; }
         public CategoriaProduto Categoria { get; set; }
         public bool Organico { get; set; }
+
+        public Produto()
+        {
+        }
+
+        public Produto(string sigla, string nome, string descricao, double valor, CategoriaProduto categoria, bool organico)
+        {
+            Sigla = sigla;
+            Nome = nome;
+            Descricao = descricao;
+            Valor = valor;
+            Categoria = categoria;
+            Organico = organico;
+        }
     }
 }
