@@ -22,7 +22,7 @@ namespace OrganicLifeWebMvc.Controllers
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cliente.ToListAsync());
+            return View(await _context.Cliente.Include(ic => ic.Pessoa).ToListAsync());
         }
 
         // GET: Clientes/Details/5
@@ -58,6 +58,8 @@ namespace OrganicLifeWebMvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                _context.Add(cliente.Pessoa.Endereco);
+                _context.Add(cliente.Pessoa);
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
