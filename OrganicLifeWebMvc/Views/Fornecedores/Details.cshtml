@@ -1,0 +1,42 @@
+﻿@model OrganicLifeWebMvc.Models.Fornecedor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fornecedor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataHoraCadastro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataHoraCadastro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResponsavelCadastro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResponsavelCadastro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataHoraAlteracao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataHoraAlteracao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResponsavelAlteracao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResponsavelAlteracao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
