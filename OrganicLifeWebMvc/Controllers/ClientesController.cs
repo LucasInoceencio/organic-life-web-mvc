@@ -54,7 +54,7 @@ namespace OrganicLifeWebMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente.FindAsync(id);
+            var cliente = await _context.Cliente.Include(ic => ic.Pessoa).Include(ic => ic.Pessoa.Endereco).SingleOrDefaultAsync(sg => sg.Id == id);
             if (cliente == null)
             {
                 return NotFound();
