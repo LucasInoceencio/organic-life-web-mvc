@@ -35,8 +35,7 @@ namespace OrganicLifeWebMvc.Controllers
             }
 
             var cliente = await _clienteService.FindByIdAsync((int)id);
-                .FirstOrDefaultAsync(m => m.Id == id);
-                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (cliente == null)
             {
                 return NotFound();
