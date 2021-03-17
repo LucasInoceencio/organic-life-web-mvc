@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrganicLifeWebMvc.Services
@@ -89,9 +90,14 @@ namespace OrganicLifeWebMvc.Services
                 .ToListAsync();
         }
 
-        public async Task<bool> ClientExistAsync(int id)
+        public async Task<bool> ClienteExistAsync(int id)
         {
             return await _applicationDbContext.Cliente.AnyAsync(an => an.Id == id);
+        }
+
+        public bool ClienteExist(int id)
+        {
+            return _applicationDbContext.Cliente.Any(an => an.Id == id);
         }
     }
 }

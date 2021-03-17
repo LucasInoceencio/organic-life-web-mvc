@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc.Views
 {
     public class ProdutosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ProdutoService _produtoService;
 
-        public ProdutosController(ApplicationDbContext context)
+        public ProdutosController(ProdutoService context)
         {
-            _context = context;
+            _produtoService = context;
         }
 
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Produto.ToListAsync());
+            return View(await _produtoService.FindAllWithAssociationAsync());
         }
 
         // GET: Produtos/Details/5
@@ -33,8 +30,7 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var produto = await _produtoService.FindByIdWithAssociationAsync((int)id);
             if (produto == null)
             {
                 return NotFound();
@@ -58,8 +54,7 @@ namespace OrganicLifeWebMvc.Views
         {
             if (ModelState.IsValid)
             {
-                _context.Add(produto);
-                await _context.SaveChangesAsync();
+                await _produtoService.InsertAsync(produto);
                 return RedirectToAction(nameof(Index));
             }
             return View(produto);
@@ -73,7 +68,8 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var produto = await _context.Produto.FindAsync(id);
+            var produto = await _produtoService.FindByIdWithAssociationAsync((int)id);
+
             if (produto == null)
             {
                 return NotFound();
@@ -97,12 +93,12 @@ namespace OrganicLifeWebMvc.Views
             {
                 try
                 {
-                    _context.Update(produto);
-                    await _context.SaveChangesAsync();
+                    await _produtoService.UpdateAsync(produto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProdutoExists(produto.Id))
+                    var produtoExist = await _produtoService.ProdutoExistAsync(produto.Id);
+                    if (!produtoExist)
                     {
                         return NotFound();
                     }
@@ -124,8 +120,8 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var produto = await _produtoService.FindByIdWithAssociationAsync((int)id);
+
             if (produto == null)
             {
                 return NotFound();
@@ -139,15 +135,9 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var produto = await _context.Produto.FindAsync(id);
-            _context.Produto.Remove(produto);
-            await _context.SaveChangesAsync();
+            var produto = await _produtoService.FindByIdWithAssociationAsync(id);
+            await _produtoService.DeleteSoftAsync(produto);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProdutoExists(int id)
-        {
-            return _context.Produto.Any(e => e.Id == id);
         }
     }
 }

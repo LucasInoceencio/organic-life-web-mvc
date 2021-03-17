@@ -99,7 +99,7 @@ namespace OrganicLifeWebMvc.Views
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var fornecedorExist = await this.FornecedorExists(fornecedor.Id);
+                    var fornecedorExist = await _fornecedorService.FornecedorExistAsync(fornecedor.Id);
                     if (!fornecedorExist)
                     {
                         return NotFound();
@@ -139,11 +139,6 @@ namespace OrganicLifeWebMvc.Views
             var fornecedor = await _fornecedorService.FindByIdAsync(id);
             await _fornecedorService.DeleteAsync(fornecedor);
             return RedirectToAction(nameof(Index));
-        }
-
-        private async Task<bool> FornecedorExists(int id)
-        {
-            return await _fornecedorService.FornecedorExistAsync(id);
         }
     }
 }

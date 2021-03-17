@@ -20,6 +20,7 @@ namespace OrganicLifeWebMvc.Services
         public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor")] Produto produto)
         {
             _applicationDbContext.Produto.Add(produto);
+            _applicationDbContext.Fornecedor.Add(produto.Fornecedor);
             await _applicationDbContext.SaveChangesAsync();
         }
 
@@ -34,6 +35,7 @@ namespace OrganicLifeWebMvc.Services
             try
             {
                 _applicationDbContext.Update(produto);
+                _applicationDbContext.Update(produto.Fornecedor);
                 await _applicationDbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
@@ -108,6 +110,16 @@ namespace OrganicLifeWebMvc.Services
                 .Include(ic => ic.Fornecedor.PessoaJuridica.Endereco)
                 .Include(ic => ic.Fornecedor.PessoaJuridica.Responsavel)
                 .ToListAsync();
+        }
+
+        public async Task<bool> ProdutoExistAsync(int id)
+        {
+            return await _applicationDbContext.Produto.AnyAsync(an => an.Id == id);
+        }
+
+        public bool ProdutoExist(int id)
+        {
+            return _applicationDbContext.Produto.Any(an => an.Id == id);
         }
     }
 }

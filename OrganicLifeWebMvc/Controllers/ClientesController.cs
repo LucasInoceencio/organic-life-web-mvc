@@ -100,7 +100,7 @@ namespace OrganicLifeWebMvc.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var clienteExist = await ClienteExists(cliente.Id);
+                    var clienteExist = await _clienteService.ClienteExistAsync(cliente.Id);
                     if (!clienteExist)
                     {
                         return NotFound();
@@ -142,11 +142,6 @@ namespace OrganicLifeWebMvc.Controllers
             var cliente = await _clienteService.FindByIdAsync((int)id);
             await _clienteService.DeleteAsync(cliente);
             return RedirectToAction(nameof(Index));
-        }
-
-        private async Task<bool> ClienteExists(int id)
-        {
-            return await _clienteService.ClientExistAsync(id);
         }
     }
 }
