@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc.Views
 {
     public class FornecedoresController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly FornecedorService _fornecedorService;
 
-        public FornecedoresController(ApplicationDbContext context)
+        public FornecedoresController(FornecedorService fornecedorService)
         {
-            _context = context;
+            _fornecedorService = fornecedorService;
         }
 
         // GET: Fornecedors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Fornecedor.ToListAsync());
+            return View(await _fornecedorService.FindAllWithAssociationAsync());
         }
 
         // GET: Fornecedors/Details/5
@@ -33,8 +31,8 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var fornecedor = await _fornecedorService.FindByIdAsync((int)id);
+
             if (fornecedor == null)
             {
                 return NotFound();
@@ -58,8 +56,7 @@ namespace OrganicLifeWebMvc.Views
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fornecedor);
-                await _context.SaveChangesAsync();
+                await _fornecedorService.InsertAsync(fornecedor);
                 return RedirectToAction(nameof(Index));
             }
             return View(fornecedor);
@@ -73,7 +70,8 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
+            var fornecedor = await _fornecedorService.FindByIdAsync((int)id);
+
             if (fornecedor == null)
             {
                 return NotFound();
@@ -97,12 +95,12 @@ namespace OrganicLifeWebMvc.Views
             {
                 try
                 {
-                    _context.Update(fornecedor);
-                    await _context.SaveChangesAsync();
+                    await _fornecedorService.UpdateAsync(fornecedor);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FornecedorExists(fornecedor.Id))
+                    var fornecedorExist = await this.FornecedorExists(fornecedor.Id);
+                    if (!fornecedorExist)
                     {
                         return NotFound();
                     }
@@ -124,8 +122,7 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var fornecedor = await _fornecedorService.FindByIdAsync((int)id);
             if (fornecedor == null)
             {
                 return NotFound();
@@ -139,15 +136,14 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
-            _context.Fornecedor.Remove(fornecedor);
-            await _context.SaveChangesAsync();
+            var fornecedor = await _fornecedorService.FindByIdAsync(id);
+            await _fornecedorService.DeleteAsync(fornecedor);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FornecedorExists(int id)
+        private async Task<bool> FornecedorExists(int id)
         {
-            return _context.Fornecedor.Any(e => e.Id == id);
+            return await _fornecedorService.FornecedorExistAsync(id);
         }
     }
 }

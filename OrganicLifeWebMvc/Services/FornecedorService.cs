@@ -16,13 +16,15 @@ namespace OrganicLifeWebMvc.Services
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica")] Fornecedor fornecedor)
+        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor)
         {
             _applicationDbContext.Fornecedor.Add(fornecedor);
+            _applicationDbContext.PessoaJuridica.Add(fornecedor.PessoaJuridica);
+            _applicationDbContext.Endereco.Add(fornecedor.PessoaJuridica.Endereco);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica")] Fornecedor fornecedor)
+        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor)
         {
             bool hasAny = await _applicationDbContext.Fornecedor.AnyAsync(an => an.Id == fornecedor.Id);
             if (!hasAny)
@@ -33,6 +35,8 @@ namespace OrganicLifeWebMvc.Services
             try
             {
                 _applicationDbContext.Update(fornecedor);
+                _applicationDbContext.Update(fornecedor.PessoaJuridica);
+                _applicationDbContext.Update(fornecedor.PessoaJuridica.Endereco);
                 await _applicationDbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
@@ -85,6 +89,11 @@ namespace OrganicLifeWebMvc.Services
                 .Include(ic => ic.PessoaJuridica.Endereco)
                 .Include(ic => ic.PessoaJuridica.Responsavel)
                 .ToListAsync();
+        }
+
+        public async Task<bool> FornecedorExistAsync(int id)
+        {
+            return await _applicationDbContext.Fornecedor.AnyAsync(an => an.Id == id);
         }
     }
 }
