@@ -5,7 +5,7 @@
 }
 
 <div style="padding:10px;">
-    <h2 style="text-align:center;">Listagem Fornecedores</h2>
+    <h2 style="text-align:center;">Listagem de Fornecedores</h2>
     <p>
         <a asp-action="Create" class="btn btn-success">Adicionar Fornecedor</a>
     </p>
@@ -15,25 +15,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PessoaJuridica.NomeFantasia)
+                Nome fantasia
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PessoaJuridica.RazaoSocial)
+                Razão social
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PessoaJuridica.Cnpj)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataHoraCadastro)
+                @Html.DisplayNameFor(model => model.PessoaJuridica.Celular)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ResponsavelCadastro)
+                @Html.DisplayNameFor(model => model.PessoaJuridica.Telefone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataHoraAlteracao)
+                @Html.DisplayNameFor(model => model.PessoaJuridica.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ResponsavelAlteracao)
+                Responsável
             </th>
             <th></th>
         </tr>
@@ -52,21 +52,21 @@
                     @Html.DisplayFor(modelItem => item.PessoaJuridica.Cnpj)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DataHoraCadastro)
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.Celular)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.Telefone)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.Responsavel.Nome)
                 </td>
                 <td>
                     <a asp-action="Edit" class="btn btn-primary btn-sm p" asp-route-id="@item.Id" style="">Editar</a> |
                     <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Deletar</a>
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Deletar</a> 
                 </td>
             </tr>
         }

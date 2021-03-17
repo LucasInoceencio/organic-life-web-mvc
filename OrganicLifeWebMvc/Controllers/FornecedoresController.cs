@@ -31,7 +31,7 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var fornecedor = await _fornecedorService.FindByIdAsync((int)id);
+            var fornecedor = await _fornecedorService.FindByIdWithAssociationAsync((int)id);
 
             if (fornecedor == null)
             {
@@ -70,7 +70,7 @@ namespace OrganicLifeWebMvc.Views
                 return NotFound();
             }
 
-            var fornecedor = await _fornecedorService.FindByIdAsync((int)id);
+            var fornecedor = await _fornecedorService.FindByIdWithAssociationAsync((int)id);
 
             if (fornecedor == null)
             {

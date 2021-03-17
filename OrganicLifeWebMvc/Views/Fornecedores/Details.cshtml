@@ -4,32 +4,116 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="text-center">Detalhes do Fornecedor</h2>
+<h3 class="text-center">Informações do fornecedor <b>@Model.PessoaJuridica.NomeFantasia</b></h3>
 
 <div>
-    <h4>Fornecedor</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DataHoraCadastro)
+            Id:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            Nome fantasia:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.NomeFantasia)
+        </dd>
+        <dt>
+            Razão social:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.RazaoSocial)
+        </dd>
+        <dt>
+            Cnpj:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Cnpj)
+        </dd>
+        <dt>
+            Responsável:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Responsavel.Nome)
+        </dd>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Email)
+        </dd>
+        <dt>
+            Celular:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Celular)
+        </dd>
+        <dt>
+            Telefone:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Telefone)
+        </dd>
+        <dt>
+            Logradouro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Endereco.Logradouro)
+        </dd>
+        <dt>
+            Numero:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Endereco.Numero)
+        </dd>
+        <dt>
+            Bairro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Endereco.Bairro)
+        </dd>
+        <dt>
+            CEP:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Endereco.Cep)
+        </dd>
+        <dt>
+            Cidade:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Endereco.Cidade)
+        </dd>
+        <dt>
+            Estado:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PessoaJuridica.Endereco.Estado)
+        </dd>
+        <dt>
+            Data/hora cadastro:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataHoraCadastro)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ResponsavelCadastro)
+            Responsável pelo cadastro:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ResponsavelCadastro)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DataHoraAlteracao)
+            Data/hora alteração:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataHoraAlteracao)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ResponsavelAlteracao)
+            Responsável pela alteração:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ResponsavelAlteracao)
@@ -37,6 +121,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-success" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index" class="btn btn-danger">Cancelar</a>
 </div>
