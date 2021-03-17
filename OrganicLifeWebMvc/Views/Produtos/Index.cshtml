@@ -5,23 +5,23 @@
 }
 
 <div style="padding:10px;">
-    <h2 style="text-align:center;">Listagem Produtos</h2>
+    <h2 style="text-align:center;">Listagem de Produtos</h2>
 
     <p>
-        <a asp-action="Create" class="btn btn-success">Adicionar produto</a>
+        <a asp-action="Create" class="btn btn-success">Adicionar Produto</a>
     </p>
 </div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Sigla)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                @Html.DisplayNameFor(model => model.Sigla)
+            </th>
+            <th>
+                Descrição
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Valor)
@@ -30,19 +30,7 @@
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Organico)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataHoraCadastro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResponsavelCadastro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataHoraAlteracao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResponsavelAlteracao)
+                Orgânico
             </th>
             <th></th>
         </tr>
@@ -52,10 +40,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Sigla)
+                    @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
+                    @Html.DisplayFor(modelItem => item.Sigla)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descricao)
@@ -68,18 +56,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Organico)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataHoraCadastro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
                 </td>
                 <td>
                     <a asp-action="Edit" class="btn btn-primary btn-sm p" asp-route-id="@item.Id" style="">Editar</a> |

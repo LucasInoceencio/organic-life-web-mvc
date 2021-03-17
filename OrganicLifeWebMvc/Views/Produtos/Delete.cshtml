@@ -4,13 +4,17 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2 class="text-center">Deletar Produto</h2>
+<h3 class="text-center">Você tem certeza que deseja deletar o produto <b>@Model.Nome</b> ?</h3>
 <div>
-    <h4>Produto</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+           Id
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Sigla)
         </dt>
@@ -24,7 +28,7 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
+           Descrição
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Descricao)
@@ -42,58 +46,16 @@
             @Html.DisplayFor(model => model.Categoria)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Organico)
+            Orgânico
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Organico)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Deletado)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Deletado)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DataHoraExclusao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataHoraExclusao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ResponsavelExclusao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ResponsavelExclusao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DataHoraCadastro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataHoraCadastro)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ResponsavelCadastro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ResponsavelCadastro)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DataHoraAlteracao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataHoraAlteracao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ResponsavelAlteracao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ResponsavelAlteracao)
-        </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Deletar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-default">Cancelar</a>
     </form>
 </div>
