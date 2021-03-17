@@ -4,14 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<div style="padding:10px;">
+    <h2 style="text-align:center;">Listagem Fornecedores</h2>
+    <p>
+        <a asp-action="Create" class="btn btn-success">Adicionar Fornecedor</a>
+    </p>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PessoaJuridica.NomeFantasia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PessoaJuridica.RazaoSocial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PessoaJuridica.Cnpj)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataHoraCadastro)
             </th>
@@ -28,26 +39,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataHoraCadastro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.NomeFantasia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.RazaoSocial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PessoaJuridica.Cnpj)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHoraCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary btn-sm p" asp-route-id="@item.Id" style="">Editar</a> |
+                    <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

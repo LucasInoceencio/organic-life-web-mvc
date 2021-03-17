@@ -4,40 +4,52 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2 style="text-align:center;">Deletar Cliente</h2>
+<h2 class="text-center">Deletar Cliente</h2>
+<h3 class="text-center">Você tem certeza que deseja deletar o cliente <b>@Model.Pessoa.Nome</b> ?</h3>
 <div>
-    <h4>Cliente</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Data/Hora Cadastro:
+            Id cliente:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DataHoraCadastro)
+            @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            Responsável:
+            Nome:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ResponsavelCadastro)
+            @Html.DisplayFor(model => model.Pessoa.Nome)
         </dd>
         <dt>
-            Data/Hora Alteração
+            Cpf:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DataHoraAlteracao)
+            @Html.DisplayFor(model => model.Pessoa.Cpf)
         </dd>
         <dt>
-            Responsável
+            RG:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ResponsavelAlteracao)
+            @Html.DisplayFor(model => model.Pessoa.Rg)
+        </dd>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Email)
+        </dd>
+        <dt>
+            Celular:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Celular)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Deletar" class="btn btn-danger btn-sm" /> |
-        <a asp-action="Index" class="btn btn-default btn-sm">Voltar</a>
+        <a asp-action="Index" class="btn btn-default btn-sm">Cancelar</a>
     </form>
 </div>

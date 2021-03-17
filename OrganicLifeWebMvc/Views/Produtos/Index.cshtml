@@ -4,11 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<div style="padding:10px;">
+    <h2 style="text-align:center;">Listagem Produtos</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create" class="btn btn-success">Adicionar produto</a>
+    </p>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -31,15 +33,6 @@
                 @Html.DisplayNameFor(model => model.Organico)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Deletado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataHoraExclusao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResponsavelExclusao)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DataHoraCadastro)
             </th>
             <th>
@@ -55,53 +48,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sigla)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Organico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deletado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataHoraExclusao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsavelExclusao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataHoraCadastro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sigla)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHoraCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary btn-sm p" asp-route-id="@item.Id" style="">Editar</a> |
+                    <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

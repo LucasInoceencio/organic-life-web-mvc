@@ -34,7 +34,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _clienteService.FindByIdAsync((int)id);
+            var cliente = await _clienteService.FindByIdWithAssociationAsync((int)id);
 
             if (cliente == null)
             {
@@ -125,7 +125,6 @@ namespace OrganicLifeWebMvc.Controllers
             }
 
             var cliente = await _clienteService.FindByIdAsync((int)id);
-            await _clienteService.DeleteAsync(cliente);
 
             if (cliente == null)
             {

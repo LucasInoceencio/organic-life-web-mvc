@@ -4,32 +4,104 @@
     ViewData["Title"] = "Details";
 }
 
-<h2 style="text-align:center;">Detalhes</h2>
+<h2 class="text-center">Detalhes do Cliente</h2>
+<h3 class="text-center">Informações do cliente <b>@Model.Pessoa.Nome</b></h3>
 
 <div>
-    <h4>@Html.DisplayNameFor(model => model.Pessoa.Nome)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Data/Hora Cadastro:
+            Nome:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Nome)
+        </dd>
+        <dt>
+            Cpf:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Cpf)
+        </dd>
+        <dt>
+            RG:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Rg)
+        </dd>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Email)
+        </dd>
+        <dt>
+            Celular:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Celular)
+        </dd>
+        <dt>
+            Telefone:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Telefone)
+        </dd>
+        <dt>
+            Logradouro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Endereco.Logradouro)
+        </dd>
+        <dt>
+            Numero:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Endereco.Numero)
+        </dd>
+        <dt>
+            Bairro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Endereco.Bairro)
+        </dd>
+        <dt>
+            CEP:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Endereco.Cep)
+        </dd>
+        <dt>
+            Cidade:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Endereco.Cidade)
+        </dd>
+        <dt>
+            Estado:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pessoa.Endereco.Estado)
+        </dd>
+        <dt>
+            Data/hora cadastro:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataHoraCadastro)
         </dd>
         <dt>
-            Responsável:
+            Responsável pelo cadastro:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ResponsavelCadastro)
         </dd>
         <dt>
-            Data/Hora Alteração:
+            Data/hora alteração:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataHoraAlteracao)
         </dd>
         <dt>
-            Responsável:
+            Responsável pela alteração:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ResponsavelAlteracao)
@@ -37,6 +109,6 @@
     </dl>
 </div>
 <div class="d-flex justify-content-around">
-    <input type="submit" value="Editar" asp-action="Clientes" class="btn btn-success btn-sm" /> |
-    <a class="btn btn-danger btn-sm" asp-action="Index">Cancel</a>
+    <a asp-action="Edit" class="btn btn-success btn-sm" asp-route-id="@Model.Id" style="">Editar</a> |
+    <a class="btn btn-danger btn-sm" asp-action="Index">Cancelar</a>
 </div>

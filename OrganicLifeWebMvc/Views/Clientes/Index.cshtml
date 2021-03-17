@@ -18,16 +18,13 @@
                 Nome
             </th>
             <th>
-                Data/Hora Cadastro
+                E-mail
             </th>
             <th>
-                Responsável
+                Cpf
             </th>
             <th>
-                Data/Hora Alteração
-            </th>
-            <th>
-                Responsável Alteração
+                Celular
             </th>
             <th></th>
         </tr>
@@ -40,19 +37,16 @@
                     @Html.DisplayFor(modelItem => item.Pessoa.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DataHoraCadastro)
+                    @Html.DisplayFor(modelItem => item.Pessoa.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ResponsavelCadastro)
+                    @Html.DisplayFor(modelItem => item.Pessoa.Cpf)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DataHoraAlteracao)
+                    @Html.DisplayFor(modelItem => item.Pessoa.Celular)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ResponsavelAlteracao)
-                </td>
-                <td>
-                    <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.Id" class="p" style="">Editar</a> |
+                    <a asp-action="Edit" class="btn btn-primary btn-sm p" asp-route-id="@item.Id" style="">Editar</a> |
                     <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.Id">Detalhes</a> |
                     <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Deletar</a>
                 </td>
