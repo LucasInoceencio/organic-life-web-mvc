@@ -1,32 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
 using OrganicLifeWebMvc.Services;
 
-namespace OrganicLifeWebMvc.Controllers
+namespace OrganicLifeWebMvc.Views
 {
-    public class ClientesController : Controller
+    public class ProdutosController : Controller
     {
-        private readonly ClienteService _clienteService;
+        private readonly ProdutoService _produtoService;
 
-        public ClientesController(ClienteService clienteService)
+        public ProdutosController(ProdutoService context)
         {
-            _clienteService = clienteService;
+            _produtoService = context;
         }
 
-        // GET: Clientes
+        // GET: Produtos
         public async Task<IActionResult> Index()
         {
-            return View(await _clienteService.FindAllAsync());
+            return View(await _produtoService.FindAllWithAssociationAsync());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Produtos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +30,37 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _clienteService.FindByIdAsync((int)id);
-                .FirstOrDefaultAsync(m => m.Id == id);
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (cliente == null)
+            var produto = await _produtoService.FindByIdWithAssociationAsync((int)id);
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(produto);
         }
 
-        // GET: Clientes/Create
+        // GET: Produtos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Clientes/Create
+        // POST: Produtos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Sigla,Nome,Descricao,Valor,Categoria,Organico,Deletado,DataHoraExclusao,ResponsavelExclusao,Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Produto produto)
         {
             if (ModelState.IsValid)
             {
-                await _clienteService.InsertAsync(cliente);
+                await _produtoService.InsertAsync(produto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(produto);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Produtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +68,23 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _clienteService.FindByIdWithAssociationAsync((int)id);
-            if (cliente == null)
+            var produto = await _produtoService.FindByIdWithAssociationAsync((int)id);
+
+            if (produto == null)
             {
                 return NotFound();
             }
-            return View(cliente);
+            return View(produto);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Produtos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("Sigla,Nome,Descricao,Valor,Categoria,Organico,Deletado,DataHoraExclusao,ResponsavelExclusao,Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Produto produto)
         {
-            if (id != cliente.Id)
+            if (id != produto.Id)
             {
                 return NotFound();
             }
@@ -98,12 +93,12 @@ namespace OrganicLifeWebMvc.Controllers
             {
                 try
                 {
-                    await _clienteService.UpdateAsync(cliente);
+                    await _produtoService.UpdateAsync(produto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var clienteExist = await _clienteService.ClienteExistAsync(cliente.Id);
-                    if (!clienteExist)
+                    var produtoExist = await _produtoService.ProdutoExistAsync(produto.Id);
+                    if (!produtoExist)
                     {
                         return NotFound();
                     }
@@ -114,10 +109,10 @@ namespace OrganicLifeWebMvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(produto);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Produtos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,24 +120,23 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _clienteService.FindByIdAsync((int)id);
-            await _clienteService.DeleteAsync(cliente);
+            var produto = await _produtoService.FindByIdWithAssociationAsync((int)id);
 
-            if (cliente == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(produto);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Produtos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = await _clienteService.FindByIdAsync((int)id);
-            await _clienteService.DeleteAsync(cliente);
+            var produto = await _produtoService.FindByIdWithAssociationAsync(id);
+            await _produtoService.DeleteSoftAsync(produto);
             return RedirectToAction(nameof(Index));
         }
     }

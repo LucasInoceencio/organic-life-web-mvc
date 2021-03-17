@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OrganicLifeWebMvc.Data;
+using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc
 {
@@ -39,6 +40,9 @@ namespace OrganicLifeWebMvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<ProdutoService>();
+            services.AddScoped<ClienteService>();
+            services.AddScoped<FornecedorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
