@@ -33,8 +33,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cliente = await _context.Cliente.Include(ic => ic.Pessoa).Include(ic => ic.Pessoa.Endereco).SingleOrDefaultAsync(sg => sg.Id == id);
             if (cliente == null)
             {
                 return NotFound();
