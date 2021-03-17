@@ -7,22 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc.Controllers
 {
     public class ClientesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ClienteService _clienteService;
 
-        public ClientesController(ApplicationDbContext context)
+        public ClientesController(ClienteService clienteService)
         {
-            _context = context;
+            _clienteService = clienteService;
         }
 
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cliente.Include(ic => ic.Pessoa).ToListAsync());
+            return View(await _clienteService.FindAllAsync());
         }
 
         // GET: Clientes/Details/5
@@ -33,8 +34,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cliente = await _clienteService.FindByIdAsync((int)id);
             if (cliente == null)
             {
                 return NotFound();
@@ -54,14 +54,11 @@ namespace OrganicLifeWebMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente)
+        public async Task<IActionResult> Create(Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cliente.Pessoa.Endereco);
-                _context.Add(cliente.Pessoa);
-                _context.Add(cliente);
-                await _context.SaveChangesAsync();
+                await _clienteService.InsertAsync(cliente);
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
@@ -75,7 +72,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente.Include(ic => ic.Pessoa).Include(ic => ic.Pessoa.Endereco).SingleOrDefaultAsync(sg => sg.Id == id);
+            var cliente = await _clienteService.FindByIdWithAssociationAsync((int)id);
             if (cliente == null)
             {
                 return NotFound();
@@ -99,12 +96,12 @@ namespace OrganicLifeWebMvc.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
-                    await _context.SaveChangesAsync();
+                    await _clienteService.UpdateAsync(cliente);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.Id))
+                    var clienteExist = await ClienteExists(cliente.Id);
+                    if (!clienteExist)
                     {
                         return NotFound();
                     }
@@ -126,8 +123,9 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cliente = await _clienteService.FindByIdAsync((int)id);
+            await _clienteService.DeleteAsync(cliente);
+
             if (cliente == null)
             {
                 return NotFound();
@@ -141,15 +139,14 @@ namespace OrganicLifeWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = await _context.Cliente.FindAsync(id);
-            _context.Cliente.Remove(cliente);
-            await _context.SaveChangesAsync();
+            var cliente = await _clienteService.FindByIdAsync((int)id);
+            await _clienteService.DeleteAsync(cliente);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteExists(int id)
+        private async Task<bool> ClienteExists(int id)
         {
-            return _context.Cliente.Any(e => e.Id == id);
+            return await _clienteService.ClientExistAsync(id);
         }
     }
 }
