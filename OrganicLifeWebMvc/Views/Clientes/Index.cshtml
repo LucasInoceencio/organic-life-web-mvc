@@ -15,42 +15,52 @@
     <thead>
         <tr>
             <th>
+                ID
+            </th>
+            <th>
                 Nome
             </th>
             <th>
                 E-mail
             </th>
             <th>
-                Cpf
+                CPF
             </th>
             <th>
                 Celular
             </th>
-            <th></th>
+            <th style="display:flex; justify-content:space-around;">
+                <div>Editar</div>
+                <div>⠀⠀Detalhes</div>
+                <div>Apagar</div>
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pessoa.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pessoa.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pessoa.Cpf)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pessoa.Celular)
-                </td>
-                <td>
-                    <a asp-action="Edit" class="btn btn-primary btn-sm p" asp-route-id="@item.Id" style="">Editar</a> |
-                    <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Deletar</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pessoa.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pessoa.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pessoa.Cpf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pessoa.Celular)
+            </td>
+            <td style="display:flex; justify-content:space-around;">
+                <a asp-action="Edit" class="btn btn-primary btn" asp-route-id="@item.Id"><img src="~/images/editar.png" style="width: 15px; height: 15px;" /></a>
+                <a asp-action="Details" class="btn btn-info btn" asp-route-id="@item.Id" style="margin-left:7px;"><img src="~/images/detalhe.png" style="width: 15px; height: 15px;" /></a>
+                <a asp-action="Delete" class="btn btn-danger btn" asp-route-id="@item.Id"><img src="~/images/lixeira2.png" style="width: 15px; height: 15px;" /></a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

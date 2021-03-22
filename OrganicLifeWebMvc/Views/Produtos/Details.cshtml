@@ -6,9 +6,8 @@
 
 <h2 class="text-center">Detalhes do Produto</h2>
 <h3 class="text-center">Informações do produto <b>@Model.Nome</b></h3>
-
-<div>
-    <hr />
+<hr />
+<div style="display:flex; flex-direction:column; align-items:center;">
     <dl class="dl-horizontal">
         <dt>
             Id
@@ -77,8 +76,9 @@
             @Html.DisplayFor(model => model.ResponsavelAlteracao)
         </dd>
     </dl>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Editar</a> |
+        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Editar</a> |
-    <a asp-action="Index" class="btn btn-danger">Cancelar</a>
-</div>
+

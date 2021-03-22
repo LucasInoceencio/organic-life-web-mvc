@@ -6,9 +6,8 @@
 
 <h2 class="text-center">Detalhes do Fornecedor</h2>
 <h3 class="text-center">Informações do fornecedor <b>@Model.PessoaJuridica.NomeFantasia</b></h3>
-
-<div>
-    <hr />
+<hr />
+<div style="display:flex; flex-direction:column; align-items:center;">
     <dl class="dl-horizontal">
         <dt>
             Id:
@@ -119,8 +118,9 @@
             @Html.DisplayFor(model => model.ResponsavelAlteracao)
         </dd>
     </dl>
+    <div>
+        <a asp-action="Edit" class="btn btn-success" asp-route-id="@Model.Id">Editar</a> |
+        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" class="btn btn-success" asp-route-id="@Model.Id">Editar</a> |
-    <a asp-action="Index" class="btn btn-danger">Cancelar</a>
-</div>
+

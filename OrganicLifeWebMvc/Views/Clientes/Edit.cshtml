@@ -5,9 +5,9 @@
 }
 
 <h2 class="text-center">Editar Cliente</h2>
-<h3 class="text-center">Informações do cliente <b>@Model.Pessoa.Nome</b></h3>
+<h3 class="text-center">Informações do Cliente <b>@Model.Pessoa.Nome</b></h3>
 <hr />
-<div class="row">
+<div class="row" style="display:flex; flex-direction:column; align-items:center;">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -18,12 +18,12 @@
                 <span asp-validation-for="Pessoa.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Pessoa.Cpf" class="control-label">Cpf</label>
+                <label asp-for="Pessoa.Cpf" class="control-label">CPF</label>
                 <input asp-for="Pessoa.Cpf" class="form-control form-control-sm" />
                 <span asp-validation-for="Pessoa.Cpf" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Pessoa.Rg" class="control-label">Rg</label>
+                <label asp-for="Pessoa.Rg" class="control-label">RG</label>
                 <input asp-for="Pessoa.Rg" class="form-control form-control-sm" />
                 <span asp-validation-for="Pessoa.Rg" class="text-danger"></span>
             </div>
@@ -53,7 +53,7 @@
                 <span asp-validation-for="Pessoa.Endereco.Cidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Pessoa.Email" class="control-label">Email</label>
+                <label asp-for="Pessoa.Email" class="control-label">E-mail</label>
                 <input asp-for="Pessoa.Email" class="form-control form-control-sm" />
                 <span asp-validation-for="Pessoa.Email" class="text-danger"></span>
             </div>
@@ -67,9 +67,11 @@
                 <input asp-for="Pessoa.Celular" class="form-control form-control-sm" />
                 <span asp-validation-for="Pessoa.Celular" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Editar" class="btn btn-success" /> |
-                <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+            <div class="form-group" style="display:flex; flex-direction:column; align-items:center;">
+                <div>
+                    <input type="submit" value="Editar" class="btn btn-success" />
+                    <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>

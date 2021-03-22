@@ -7,7 +7,7 @@
 <h2 class="text-center">Editar Produto</h2>
 <h3 class="text-center">Informações do produto <b>@Model.Nome</b></h3>
 <hr />
-<div class="row">
+<div class="row" style="display:flex; flex-direction:column; align-items:center;">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -81,9 +81,11 @@
                 <input asp-for="ResponsavelAlteracao" class="form-control" />
                 <span asp-validation-for="ResponsavelAlteracao" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Editar" class="btn btn-success" /> |
-                <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+            <div class="form-group" style="display:flex; flex-direction:column; align-items:center;">
+                <div>
+                    <input type="submit" value="Editar" class="btn btn-success" />
+                    <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>
