@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace OrganicLifeWebMvc.Models
 {
@@ -19,7 +17,7 @@ namespace OrganicLifeWebMvc.Models
     {
         public Cliente Cliente { get; set; }
         public Fornecedor Fornecedor { get; set; }
-        public ICollection<Produto> Produtos { get; set; } = new List<Produto>();
+        public double ValorTotal { get; set; }
         public double ValorDesconto { get; set; }
         public double TaxaEntrega { get; set; }
         public MeioPagamento MeioPagamento { get; set; }
@@ -41,24 +39,9 @@ namespace OrganicLifeWebMvc.Models
             DataHoraPrevisaoEntrega = dataHoraPrevisaoEntrega;
         }
 
-        public void AddProduto(Produto produto)
-        {
-            Produtos.Add(produto);
-        }
-
-        public void RemoveProduto(Produto produto)
-        {
-            Produtos.Remove(produto);
-        }
-
-        public double ValorTotal()
-        {
-            return Produtos.Sum(sm => sm.Valor);
-        }
-
         public double ValorLiquido()
         {
-            return ValorTotal() + TaxaEntrega - ValorDesconto;
+            return ValorTotal + TaxaEntrega - ValorDesconto;
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace OrganicLifeWebMvc.Models
 {
     public enum CategoriaProduto
@@ -21,7 +17,6 @@ namespace OrganicLifeWebMvc.Models
         public double Valor { get; set; }
         public CategoriaProduto Categoria { get; set; }
         public bool Organico { get; set; }
-        public ICollection<Venda> Vendas = new List<Venda>();
 
         public Produto()
         {

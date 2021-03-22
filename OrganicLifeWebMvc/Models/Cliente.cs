@@ -19,10 +19,10 @@ namespace OrganicLifeWebMvc.Models
             Pessoa = pessoa;
         }
 
-        public double TotalCompras(DateTime dataInicial, DateTime dataFinal)
-        {
-            return Compras.Where(wh => wh.DataHoraCadastro >= dataInicial && wh.DataHoraCadastro <= dataFinal)
-                .Sum(sm => sm.ValorTotal());
-        }
+        //public double TotalCompras(DateTime dataInicial, DateTime dataFinal)
+        //{
+        //    return Compras.Where(wh => wh.DataHoraCadastro >= dataInicial && wh.DataHoraCadastro <= dataFinal)
+        //        .Sum(sm => sm.ValorTotal());
+        //}
     }
 }

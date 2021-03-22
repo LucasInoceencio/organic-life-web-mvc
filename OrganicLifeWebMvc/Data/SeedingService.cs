@@ -87,25 +87,25 @@ namespace OrganicLifeWebMvc.Data
 
             // Venda
 
-            var venda1 = new Venda() { Id = 1, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente1, Fornecedor = fornecedor1, MeioPagamento = MeioPagamento.CartaoCredito, Pago = true, TaxaEntrega = 5.00, ValorDesconto = 2.00 };
-            venda1.AddProduto(produto1);
-            venda1.AddProduto(produto2);
+            //var venda1 = new Venda() { Id = 1, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente1, Fornecedor = fornecedor1, MeioPagamento = MeioPagamento.CartaoCredito, Pago = true, TaxaEntrega = 5.00, ValorDesconto = 2.00 };
+            //venda1.AddProduto(produto1);
+            //venda1.AddProduto(produto2);
 
-            var venda2 = new Venda() { Id = 2, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente2, Fornecedor = fornecedor3, MeioPagamento = MeioPagamento.Dinheiro, Pago = true, TaxaEntrega = 6.00, ValorDesconto = 3.00 };
-            venda2.AddProduto(produto7);
-            venda2.AddProduto(produto9);
+            //var venda2 = new Venda() { Id = 2, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente2, Fornecedor = fornecedor3, MeioPagamento = MeioPagamento.Dinheiro, Pago = true, TaxaEntrega = 6.00, ValorDesconto = 3.00 };
+            //venda2.AddProduto(produto7);
+            //venda2.AddProduto(produto9);
 
-            var venda3 = new Venda() { Id = 3, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente3, Fornecedor = fornecedor4, MeioPagamento = MeioPagamento.Cheque, Pago = false, TaxaEntrega = 7.00, ValorDesconto = 5.00 };
-            venda3.AddProduto(produto10);
-            venda3.AddProduto(produto12);
+            //var venda3 = new Venda() { Id = 3, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente3, Fornecedor = fornecedor4, MeioPagamento = MeioPagamento.Cheque, Pago = false, TaxaEntrega = 7.00, ValorDesconto = 5.00 };
+            //venda3.AddProduto(produto10);
+            //venda3.AddProduto(produto12);
 
-            var venda4 = new Venda() { Id = 4, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente4, Fornecedor = fornecedor5, MeioPagamento = MeioPagamento.Pix, Pago = true, TaxaEntrega = 4.00, ValorDesconto = 2.00 };
-            venda4.AddProduto(produto14);
-            venda4.AddProduto(produto15);
+            //var venda4 = new Venda() { Id = 4, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente4, Fornecedor = fornecedor5, MeioPagamento = MeioPagamento.Pix, Pago = true, TaxaEntrega = 4.00, ValorDesconto = 2.00 };
+            //venda4.AddProduto(produto14);
+            //venda4.AddProduto(produto15);
 
-            var venda5 = new Venda() { Id = 5, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente5, Fornecedor = fornecedor2, MeioPagamento = MeioPagamento.Transferencia, Pago = false, TaxaEntrega = 8.00, ValorDesconto = 1.00 };
-            venda5.AddProduto(produto4);
-            venda5.AddProduto(produto5);
+            //var venda5 = new Venda() { Id = 5, DataHoraCadastro = DateTime.Now, ResponsavelCadastro = "Inocencio", Cliente = cliente5, Fornecedor = fornecedor2, MeioPagamento = MeioPagamento.Transferencia, Pago = false, TaxaEntrega = 8.00, ValorDesconto = 1.00 };
+            //venda5.AddProduto(produto4);
+            //venda5.AddProduto(produto5);
 
             // Add no banco
             _context.Endereco.AddRange(endereco1, endereco2, endereco3, endereco4, endereco5, endereco6, endereco7, endereco8, endereco9, endereco10);
@@ -120,7 +120,7 @@ namespace OrganicLifeWebMvc.Data
 
             _context.Produto.AddRange(produto1, produto2, produto3, produto4, produto5, produto6, produto7, produto8, produto9, produto10, produto11, produto12, produto13, produto14, produto15);
 
-            _context.Venda.AddRange(venda1, venda2, venda3, venda4, venda5);
+            //_context.Venda.AddRange(venda1, venda2, venda3, venda4, venda5);
 
             _context.SaveChanges();
         }
