@@ -20,5 +20,6 @@ namespace OrganicLifeWebMvc.Data
         public DbSet<PessoaJuridica> PessoaJuridica { get; set; }
         public DbSet<Produto> Produto { get; set; }
         public DbSet<Venda> Venda { get; set; }
+        public DbSet<VendaProduto> VendaProduto {get; set;}
     }
 }
