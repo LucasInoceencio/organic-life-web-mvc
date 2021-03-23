@@ -20,10 +20,10 @@ namespace OrganicLifeWebMvc.Models
             PessoaJuridica = pessoaJuridica;
         }
 
-        //public double TotalVendas(DateTime dataInicial, DateTime dataFinal)
-        //{
-        //    return Vendas.Where(wh => wh.DataHoraCadastro >= dataInicial && wh.DataHoraCadastro <= dataFinal)
-        //        .Sum(sm => sm.ValorTotal());
-        //}
+        public double TotalVendas(DateTime dataInicial, DateTime dataFinal)
+        {
+            return Vendas.Where(wh => wh.DataHoraCadastro >= dataInicial && wh.DataHoraCadastro <= dataFinal)
+                .Sum(sm => sm.ValorTotal);
+        }
     }
 }
