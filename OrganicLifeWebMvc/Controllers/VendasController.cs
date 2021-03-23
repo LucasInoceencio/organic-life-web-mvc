@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc.Controllers
 {
     public class VendasController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly VendaService _vendaService;
 
-        public VendasController(ApplicationDbContext context)
+        public VendasController(VendaService vendaService)
         {
-            _context = context;
+            _vendaService = vendaService;
         }
 
         // GET: Vendas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Venda.ToListAsync());
+            return View(await _vendaService.FindAllWithAssociationAsync());
         }
 
         // GET: Vendas/Details/5
@@ -33,8 +29,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var venda = await _context.Venda
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var venda = await _vendaService.FindByIdWithAssociationAsync((int)id);
             if (venda == null)
             {
                 return NotFound();
@@ -58,8 +53,7 @@ namespace OrganicLifeWebMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(venda);
-                await _context.SaveChangesAsync();
+                await _vendaService.InsertAsync(venda);
                 return RedirectToAction(nameof(Index));
             }
             return View(venda);
@@ -73,7 +67,7 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var venda = await _context.Venda.FindAsync(id);
+            var venda = await _vendaService.FindByIdWithAssociationAsync((int)id);
             if (venda == null)
             {
                 return NotFound();
@@ -97,12 +91,12 @@ namespace OrganicLifeWebMvc.Controllers
             {
                 try
                 {
-                    _context.Update(venda);
-                    await _context.SaveChangesAsync();
+                    await _vendaService.UpdateAsync(venda);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VendaExists(venda.Id))
+                    var vendaExist = await _vendaService.VendaExistAsync(venda.Id);
+                    if (!vendaExist)
                     {
                         return NotFound();
                     }
@@ -124,8 +118,8 @@ namespace OrganicLifeWebMvc.Controllers
                 return NotFound();
             }
 
-            var venda = await _context.Venda
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var venda = await _vendaService.FindByIdWithAssociationAsync((int)id);
+
             if (venda == null)
             {
                 return NotFound();
@@ -139,15 +133,9 @@ namespace OrganicLifeWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var venda = await _context.Venda.FindAsync(id);
-            _context.Venda.Remove(venda);
-            await _context.SaveChangesAsync();
+            var venda = await _vendaService.FindByIdWithAssociationAsync(id);
+            await _vendaService.DeleteSoftAsync(venda);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool VendaExists(int id)
-        {
-            return _context.Venda.Any(e => e.Id == id);
         }
     }
 }

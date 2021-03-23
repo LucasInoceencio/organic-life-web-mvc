@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OrganicLifeWebMvc.Models
 {
@@ -23,6 +25,7 @@ namespace OrganicLifeWebMvc.Models
         public MeioPagamento MeioPagamento { get; set; }
         public bool Pago { get; set; }
         public DateTime DataHoraPrevisaoEntrega { get; set; }
+        public List<Produto> Produtos = new List<Produto>();
 
         public Venda()
         {
