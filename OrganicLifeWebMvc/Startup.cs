@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OrganicLifeWebMvc.Data;
+using OrganicLifeWebMvc.Models;
 using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc
@@ -34,8 +35,8 @@ namespace OrganicLifeWebMvc
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection"), builder => 
                     builder.MigrationsAssembly("OrganicLifeWebMvc")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>() 
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
