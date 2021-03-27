@@ -58,7 +58,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
 
 
             [Display(Name = "Fornecedor")]
-            public bool IsFornecedor { get; set; }
+            public bool IsFornecedor { get; set; } = false;
         }
 
         public void OnGet(string returnUrl = null)
