@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OrganicLifeWebMvc.Models;
+using OrganicLifeWebMvc.Services;
 
 namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
 {
@@ -20,17 +21,23 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ClienteService _clienteService;
+        private readonly FornecedorService _fornecedorService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ClienteService clienteService,
+            FornecedorService fornecedorService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _clienteService = clienteService;
+            _fornecedorService = fornecedorService;
         }
 
         [BindProperty]
@@ -56,9 +63,26 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Display(Name = "Tipo Usuário")]
+            public string TipoUsuario { get; set; }
 
-            [Display(Name = "Fornecedor")]
-            public bool IsFornecedor { get; set; } = false;
+            public string NomeCompleto { get; set; }
+            public string NomeFantasia { get; set; }
+            public string RazaoSocial { get; set; }
+            public string Cnpj { get; set; }
+            public string Cpf { get; set; }
+            public string Rg { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime DataNascimento { get; set; }
+            public string Logradouro { get; set; }
+            public string Bairro { get; set; }
+            public string Numero { get; set; }
+            public string Cidade { get; set; }
+            public string Estado { get; set; }
+            public string Cep { get; set; }
+            public string Telefone { get; set; }
+            public string Celular { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -71,7 +95,61 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, IsFornecedor = Input.IsFornecedor };
+                var endereco = new Endereco()
+                {
+                    Logradouro = Input.Logradouro,
+                    Bairro = Input.Bairro,
+                    Numero = Input.Numero,
+                    Cidade = Input.Cidade,
+                    Estado = Input.Estado,
+                    Cep = Input.Cep
+                };
+
+                var pessoaFisica = new Pessoa()
+                {
+                    Nome = Input.NomeCompleto,
+                    Cpf = Input.Cpf,
+                    Rg = Input.Rg,
+                    DataNascimento = Input.DataNascimento,
+                    Endereco = endereco,
+                    Email = Input.Email,
+                    Telefone = Input.Telefone,
+                    Celular = Input.Celular
+                };
+
+                // Criar cliente ou fornecedor e persistir no banco
+                if (Input.TipoUsuario.ToLower().Equals("fornecedor"))
+                {
+                    var pessoaJuridica = new PessoaJuridica()
+                    {
+                        RazaoSocial = Input.RazaoSocial,
+                        NomeFantasia = Input.NomeFantasia,
+                        Cnpj = Input.Cnpj,
+                        Endereco = endereco,
+                        Email = Input.Email,
+                        Telefone = Input.Telefone,
+                        Celular = Input.Celular,
+                        Responsavel = pessoaFisica
+                    };
+
+                    var fornecedor = new Fornecedor()
+                    {
+                        PessoaJuridica = pessoaJuridica
+                    };
+
+                    await _fornecedorService.InsertAsync(fornecedor);
+                }
+                if (Input.TipoUsuario.ToLower().Equals("cliente"))
+                {
+                    var cliente = new Cliente()
+                    {
+                        Pessoa = pessoaFisica
+                    };
+
+                    await _clienteService.InsertAsync(cliente);
+                }
+
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, TipoUsuario = Input.TipoUsuario, Pessoa = pessoaFisica };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

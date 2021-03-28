@@ -8,7 +8,6 @@ namespace OrganicLifeWebMvc.Models
     {
         public Pessoa Pessoa{ get; set; }
         public ICollection<Venda> Compras { get; set; } = new List<Venda>();
-        // Dados de acesso
 
         public Cliente()
         {
