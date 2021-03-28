@@ -11,7 +11,7 @@
     </p>
 </div>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -78,13 +78,13 @@
                 @Html.DisplayFor(modelItem => item.PessoaJuridica.Responsavel.Nome)
             </td>
             <td>
-                <a asp-action="Edit" class="btn btn-primary btn" asp-route-id="@item.Id" style=""><img src="~/images/editar.png" style="width: 15px; height: 15px;" /></a>
+                <a asp-action="Edit" class="btn btn-primary btn" asp-route-id="@item.Id" style=""><img src="~/images/edit.png" style="width: 15px; height: 15px;" /></a>
             </td>
             <td>
-                <a asp-action="Details" class="btn btn-info btn" asp-route-id="@item.Id" style="margin-left:8px;"><img src="~/images/detalhe.png" style="width: 15px; height: 15px;" /></a>
+                <a asp-action="Details" class="btn btn-info btn" asp-route-id="@item.Id" style="margin-left:8px;"><img src="~/images/search.png" style="width: 15px; height: 15px;" /></a>
             </td>
             <td>
-                <a asp-action="Delete" class="btn btn-danger btn" asp-route-id="@item.Id"><img src="~/images/lixeira2.png" style="width: 15px; height: 15px;" /></a>
+                <a asp-action="Delete" class="btn btn-danger btn" asp-route-id="@item.Id"><img src="~/images/trash2.png" style="width: 15px; height: 15px;" /></a>
             </td>
         </tr>
         }
