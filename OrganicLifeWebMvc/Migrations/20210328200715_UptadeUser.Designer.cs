@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrganicLifeWebMvc.Data;
 
 namespace OrganicLifeWebMvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210328200715_UptadeUser")]
+    partial class UptadeUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,8 +159,6 @@ namespace OrganicLifeWebMvc.Migrations
 
                     b.Property<string>("PasswordHash");
 
-                    b.Property<int?>("PessoaId");
-
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
@@ -180,8 +180,6 @@ namespace OrganicLifeWebMvc.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
-
-                    b.HasIndex("PessoaId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -489,13 +487,6 @@ namespace OrganicLifeWebMvc.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("OrganicLifeWebMvc.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("OrganicLifeWebMvc.Models.Pessoa", "Pessoa")
-                        .WithMany()
-                        .HasForeignKey("PessoaId");
                 });
 
             modelBuilder.Entity("OrganicLifeWebMvc.Models.Cliente", b =>

@@ -9,6 +9,7 @@ namespace OrganicLifeWebMvc.Models
     public class ApplicationUser : IdentityUser
     {
         public string Nome { get; set; }
-        public bool IsFornecedor { get; set; }
+        public string TipoUsuario { get; set; }
+        public Pessoa Pessoa { get; set; }
     }
 }
