@@ -1,0 +1,189 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-image: url('../images/whitebackl.jpg');
+}
+
+    /* Wrapping element */
+    /* Set some basic padding to keep content from hitting the edges */
+    .body-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Carousel */
+    .carousel-caption p {
+        font-size: 20px;
+        line-height: 1.4;
+    }
+
+    /* Make .svg files in the carousel display properly in older browsers */
+    .carousel-inner .item img[src$=".svg"] {
+        width: 100%;
+    }
+
+    /* QR code generator */
+    #qrCode {
+        margin: 15px;
+    }
+    
+    .fretes {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .fretes-text {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 45%;
+        justify-content: space-around;
+    }
+    .receba {
+        padding-top: 10px;
+    }
+    .receba-itens {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .receba-img {
+        width: 40%;
+        border-radius:5px;
+    }
+    .receba-container {
+        width: 55%;
+    }
+    .funciona-text {
+        text-align: center;
+        padding-top: 10px;
+    }
+    .funciona-container {
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .funciona-card {
+        width: 22%;
+        border-radius: 5px;
+        border: 0.5px solid #DCDCDC;
+    }
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .pagamento-siga {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .pagamento-siga-div {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .pagamento-div, .siga-nos {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .formas-pagamento-div, .siga-nos-div {
+        display: flex;
+        flex-direction: row;
+        width: 60%;
+    }
+    .forma-div, .siga-div {
+        width: 16%;
+    }
+    .forma-img, .siga-img {
+    width: 100%;
+    }
+
+@media screen and (max-width: 700px) {
+    body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+
+    .body-content {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .navbar-header {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+    }
+
+    .fretes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fretes-text {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .receba-itens {
+        flex-direction: column;
+    }
+
+    .receba-img {
+        width: 80%;
+    }
+
+    .receba-container {
+        width: 70%;
+    }
+
+    .funciona-container {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .funciona-card {
+        width: 80%;
+        box-sizing: border-box;
+        margin-top: 20px;
+    }
+
+    .pagamento-siga-div {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pagamento-div, .siga-nos {
+        width: 100%;
+    }
+
+    .siga-nos-div {
+        width:100px;
+    }
+    .siga-div {
+        width:33%;
+    }
+    .siga-nos-text {
+        text-align: center;
+    }
+}

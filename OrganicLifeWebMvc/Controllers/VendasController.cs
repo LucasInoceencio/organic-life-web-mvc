@@ -10,17 +10,24 @@ namespace OrganicLifeWebMvc.Controllers
     {
         private readonly VendaService _vendaService;
         private readonly FornecedorService _fornecedorService;
+        private readonly ProdutoService _produtoService;
 
-        public VendasController(VendaService vendaService, FornecedorService fornecedorService)
+        public VendasController(VendaService vendaService, FornecedorService fornecedorService, ProdutoService produtoService)
         {
             _vendaService = vendaService;
             _fornecedorService = fornecedorService;
+            _produtoService = produtoService;
         }
 
         // GET: Vendas
         public async Task<IActionResult> Index()
         {
             return View(await _fornecedorService.FindAllWithAssociationAsync());
+        }
+        // GET: Vendas
+        public async Task<IActionResult> ProdutosLista()
+        {
+            return View(await _produtoService.FindAllWithAssociationAsync());
         }
 
         // GET: Vendas/Details/5

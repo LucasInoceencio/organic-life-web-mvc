@@ -118,7 +118,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
                 };
 
                 // Criar cliente ou fornecedor e persistir no banco
-                if (Input.TipoUsuario.ToLower().Equals("fornecedor"))
+                if (!string.IsNullOrWhiteSpace(Input.TipoUsuario) && Input.TipoUsuario.ToLower().Equals("fornecedor"))
                 {
                     var pessoaJuridica = new PessoaJuridica()
                     {
@@ -139,7 +139,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
 
                     await _fornecedorService.InsertAsync(fornecedor);
                 }
-                if (Input.TipoUsuario.ToLower().Equals("cliente"))
+                if (!string.IsNullOrWhiteSpace(Input.TipoUsuario) && Input.TipoUsuario.ToLower().Equals("cliente"))
                 {
                     var cliente = new Cliente()
                     {

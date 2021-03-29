@@ -1577,6 +1577,12 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
+@media (max-width: 600){
+    .container {
+        padding-right: 0px;
+        padding-left: 0px;
+    }    
+}
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -4225,7 +4231,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-brand:hover,
 .navbar-brand:focus {
   text-decoration: none;
-}
+}ar-toggle
 .navbar-brand > img {
   display: block;
 }
