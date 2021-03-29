@@ -66,10 +66,12 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             [Display(Name = "Tipo Usuário")]
             public string TipoUsuario { get; set; }
 
+            [Required]
             public string NomeCompleto { get; set; }
             public string NomeFantasia { get; set; }
             public string RazaoSocial { get; set; }
             public string Cnpj { get; set; }
+            [Required]
             public string Cpf { get; set; }
             public string Rg { get; set; }
             [DataType(DataType.Date)]
@@ -82,6 +84,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             public string Estado { get; set; }
             public string Cep { get; set; }
             public string Telefone { get; set; }
+            [Required]
             public string Celular { get; set; }
         }
 
