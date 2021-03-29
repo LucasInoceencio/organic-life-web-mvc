@@ -121,5 +121,18 @@ namespace OrganicLifeWebMvc.Services
         {
             return _applicationDbContext.Produto.Any(an => an.Id == id);
         }
+
+        public async Task<List<Produto>> FindAllWithAssociationByFornecedor(int idFornecedor)
+        {
+            var result = await _applicationDbContext.Produto
+                .Include(ic => ic.Fornecedor)
+                .Include(ic => ic.Fornecedor.PessoaJuridica)
+                .Include(ic => ic.Fornecedor.PessoaJuridica.Endereco)
+                .Include(ic => ic.Fornecedor.PessoaJuridica.Responsavel)
+                .ToListAsync();
+
+            result = result.Where(wh => wh.Fornecedor.Id == idFornecedor && !wh.Deletado).ToList();
+            return result;
+        }
     }
 }
