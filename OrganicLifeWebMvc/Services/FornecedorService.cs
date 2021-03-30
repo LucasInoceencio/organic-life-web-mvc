@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,15 +31,39 @@ namespace OrganicLifeWebMvc.Services
             return result.Where(wh => wh.PessoaJuridica.Responsavel.Id == user.Pessoa.Id).FirstOrDefault();
         }
 
-        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor)
+        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor, ApplicationUser userLogado)
         {
+            fornecedor.DataHoraCadastro = DateTime.Now;
+            fornecedor.ResponsavelCadastro = userLogado.UserName;
+            if (fornecedor.PessoaJuridica.Id <= 0)
+            {
+                fornecedor.PessoaJuridica.Responsavel.DataHoraCadastro = DateTime.Now;
+                fornecedor.PessoaJuridica.Responsavel.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Pessoa.Add(fornecedor.PessoaJuridica.Responsavel);
+            }
+            if (fornecedor.PessoaJuridica.Id <= 0)
+            {
+                fornecedor.PessoaJuridica.DataHoraCadastro = DateTime.Now;
+                fornecedor.PessoaJuridica.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.PessoaJuridica.Add(fornecedor.PessoaJuridica);
+            }
+            if (fornecedor.PessoaJuridica.Endereco.Id <= 0)
+            {
+                fornecedor.PessoaJuridica.Endereco.DataHoraCadastro = DateTime.Now;
+                fornecedor.PessoaJuridica.Endereco.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Endereco.Add(fornecedor.PessoaJuridica.Endereco);
+            }
+            if (fornecedor.PessoaJuridica.Endereco.Id <= 0)
+            {
+                fornecedor.PessoaJuridica.Responsavel.Endereco.DataHoraCadastro = DateTime.Now;
+                fornecedor.PessoaJuridica.Responsavel.Endereco.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Endereco.Add(fornecedor.PessoaJuridica.Responsavel.Endereco);
+            }
             _applicationDbContext.Fornecedor.Add(fornecedor);
-            _applicationDbContext.PessoaJuridica.Add(fornecedor.PessoaJuridica);
-            _applicationDbContext.Endereco.Add(fornecedor.PessoaJuridica.Endereco);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor)
+        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor, ApplicationUser userLogado)
         {
             bool hasAny = await _applicationDbContext.Fornecedor.AnyAsync(an => an.Id == fornecedor.Id);
             if (!hasAny)
@@ -48,6 +73,17 @@ namespace OrganicLifeWebMvc.Services
 
             try
             {
+                fornecedor.DataHoraAlteracao = DateTime.Now;
+                fornecedor.ResponsavelAlteracao = userLogado.UserName;
+                fornecedor.PessoaJuridica.Responsavel.DataHoraAlteracao = DateTime.Now;
+                fornecedor.PessoaJuridica.Responsavel.ResponsavelAlteracao = userLogado.UserName;
+                fornecedor.PessoaJuridica.DataHoraAlteracao = DateTime.Now;
+                fornecedor.PessoaJuridica.ResponsavelAlteracao = userLogado.UserName;
+                fornecedor.PessoaJuridica.Endereco.DataHoraAlteracao = DateTime.Now;
+                fornecedor.PessoaJuridica.Endereco.ResponsavelAlteracao = userLogado.UserName;
+                fornecedor.PessoaJuridica.Responsavel.Endereco.DataHoraAlteracao = DateTime.Now;
+                fornecedor.PessoaJuridica.Responsavel.Endereco.ResponsavelAlteracao = userLogado.UserName;
+
                 _applicationDbContext.Update(fornecedor);
                 _applicationDbContext.Update(fornecedor.PessoaJuridica);
                 _applicationDbContext.Update(fornecedor.PessoaJuridica.Endereco);

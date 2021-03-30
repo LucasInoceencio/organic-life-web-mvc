@@ -141,7 +141,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
                         PessoaJuridica = pessoaJuridica
                     };
 
-                    await _fornecedorService.InsertAsync(fornecedor);
+                    await _fornecedorService.InsertAsync(fornecedor, new ApplicationUser() { Id = "system@organiclife.com.br"});
                 }
                 if (!string.IsNullOrWhiteSpace(Input.TipoUsuario) && Input.TipoUsuario.ToLower().Equals("cliente"))
                 {
@@ -150,7 +150,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
                         Pessoa = pessoaFisica
                     };
 
-                    await _clienteService.InsertAsync(cliente);
+                    await _clienteService.InsertAsync(cliente, new ApplicationUser() { Id = "system@organiclife.com.br" });
                 }
 
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, TipoUsuario = Input.TipoUsuario, Pessoa = pessoaFisica };

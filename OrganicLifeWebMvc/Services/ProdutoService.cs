@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,14 +18,21 @@ namespace OrganicLifeWebMvc.Services
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor")] Produto produto)
+        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor")] Produto produto, ApplicationUser userLogado)
         {
+            produto.DataHoraCadastro = DateTime.Now;
+            produto.ResponsavelCadastro = userLogado.UserName;
+            if (produto.Fornecedor.Id <= 0)
+            {
+                produto.Fornecedor.DataHoraCadastro = DateTime.Now;
+                produto.Fornecedor.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Fornecedor.Add(produto.Fornecedor);
+            }
             _applicationDbContext.Produto.Add(produto);
-            _applicationDbContext.Fornecedor.Add(produto.Fornecedor);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor")] Produto produto)
+        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor")] Produto produto, ApplicationUser userLogado)
         {
             bool hasAny = await _applicationDbContext.Produto.AnyAsync(an => an.Id == produto.Id);
             if (!hasAny)
@@ -34,8 +42,9 @@ namespace OrganicLifeWebMvc.Services
 
             try
             {
+                produto.DataHoraAlteracao = DateTime.Now;
+                produto.ResponsavelAlteracao = userLogado.UserName;
                 _applicationDbContext.Update(produto);
-                _applicationDbContext.Update(produto.Fornecedor);
                 await _applicationDbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
@@ -44,7 +53,7 @@ namespace OrganicLifeWebMvc.Services
             }
         }
 
-        public async Task DeleteSoftAsync(Produto produto)
+        public async Task DeleteSoftAsync(Produto produto, ApplicationUser userLogado)
         {
             bool hasAny = await _applicationDbContext.Produto.AnyAsync(an => an.Id == produto.Id);
             if (!hasAny)
@@ -55,6 +64,8 @@ namespace OrganicLifeWebMvc.Services
             try
             {
                 produto.Deletado = true;
+                produto.DataHoraExclusao = DateTime.Now;
+                produto.ResponsavelExclusao = userLogado.UserName;
                 _applicationDbContext.Update(produto);
                 await _applicationDbContext.SaveChangesAsync();
             }
