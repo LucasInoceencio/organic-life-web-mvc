@@ -4,75 +4,79 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Cadastro de Cliente</h2>
+<h2 style="text-align:center;">Cadastro de Cliente</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="" style="display:flex; flex-direction:column; align-items:center;">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
+            <div class="form-group col-md-8">
                 <label asp-for="Pessoa.Nome" class="control-label">Nome Completo</label>
                 <input asp-for="Pessoa.Nome" class="form-control" />
                 <span asp-validation-for="Pessoa.Nome" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Pessoa.Cpf" class="control-label">Cpf</label>
                 <input asp-for="Pessoa.Cpf" class="form-control" />
                 <span asp-validation-for="Pessoa.Cpf" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Pessoa.Rg" class="control-label">Rg</label>
                 <input asp-for="Pessoa.Rg" class="form-control" />
                 <span asp-validation-for="Pessoa.Rg" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Pessoa.DataNascimento" class="control-label">Data Nascimento</label>
                 <input asp-for="Pessoa.DataNascimento" class="form-control" />
                 <span asp-validation-for="Pessoa.DataNascimento" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-8">
                 <label asp-for="Pessoa.Endereco.Logradouro" class="control-label">Logradouro</label>
                 <input asp-for="Pessoa.Endereco.Logradouro" class="form-control" />
                 <span asp-validation-for="Pessoa.Endereco.Logradouro" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Pessoa.Endereco.Bairro" class="control-label">Bairro</label>
                 <input asp-for="Pessoa.Endereco.Bairro" class="form-control" />
                 <span asp-validation-for="Pessoa.Endereco.Bairro" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Pessoa.Endereco.Numero" class="control-label">Número</label>
                 <input asp-for="Pessoa.Endereco.Numero" class="form-control" />
                 <span asp-validation-for="Pessoa.Endereco.Numero" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Pessoa.Endereco.Cidade" class="control-label">Cidade</label>
                 <input asp-for="Pessoa.Endereco.Cidade" class="form-control" />
                 <span asp-validation-for="Pessoa.Endereco.Cidade" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Pessoa.Email" class="control-label">Email</label>
-                <input asp-for="Pessoa.Email" class="form-control" />
-                <span asp-validation-for="Pessoa.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group col-md-6">
                 <label asp-for="Pessoa.Telefone" class="control-label">Telefone</label>
                 <input asp-for="Pessoa.Telefone" class="form-control" />
                 <span asp-validation-for="Pessoa.Telefone" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Pessoa.Celular" class="control-label">Celular</label>
                 <input asp-for="Pessoa.Celular" class="form-control" />
                 <span asp-validation-for="Pessoa.Celular" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-12">
+                <label asp-for="Pessoa.Email" class="control-label">Email</label>
+                <input asp-for="Pessoa.Email" class="form-control" />
+                <span asp-validation-for="Pessoa.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12">
                 <input type="submit" value="Cadastrar" class="btn btn-success" />
                 <a class="btn btn-danger" asp-action="Index">Cancel</a>
             </div>
         </form>
     </div>
 </div>
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

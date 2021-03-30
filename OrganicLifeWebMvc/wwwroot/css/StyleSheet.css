@@ -30,6 +30,7 @@ body {
         margin: 15px;
     }
     
+    /*Códigos Tela Home*/
     .fretes {
         width: 100%;
         padding: 20px;
@@ -37,6 +38,7 @@ body {
         flex-direction: row;
         justify-content: space-around;
     }
+
     .fretes-text {
         display: flex;
         flex-direction: row;
@@ -44,55 +46,66 @@ body {
         width: 45%;
         justify-content: space-around;
     }
+
     .receba {
         padding-top: 10px;
     }
+
     .receba-itens {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
     }
+
     .receba-img {
         width: 40%;
         border-radius:5px;
     }
+
     .receba-container {
         width: 55%;
     }
+
     .funciona-text {
         text-align: center;
         padding-top: 10px;
     }
+
     .funciona-container {
         padding: 20px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
+
     .funciona-card {
         width: 22%;
         border-radius: 5px;
         border: 0.5px solid #DCDCDC;
     }
+
     .card-img-top {
         width: 100%;
         height: auto;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
+
     .pagamento-siga {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
     }
+
     .pagamento-siga-div {
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
     }
+
     .pagamento-div, .siga-nos {
         width: 50%;
         display: flex;
@@ -100,17 +113,24 @@ body {
         align-items: center;
         justify-content: space-around;
     }
+
     .formas-pagamento-div, .siga-nos-div {
         display: flex;
         flex-direction: row;
         width: 60%;
     }
+
     .forma-div, .siga-div {
         width: 16%;
     }
+
     .forma-img, .siga-img {
     width: 100%;
     }
+
+    /*Códigos Telas Create*/
+
+
 
 @media screen and (max-width: 700px) {
     body {
@@ -180,10 +200,13 @@ body {
     .siga-nos-div {
         width:100px;
     }
+
     .siga-div {
         width:33%;
     }
+
     .siga-nos-text {
         text-align: center;
     }
+
 }
