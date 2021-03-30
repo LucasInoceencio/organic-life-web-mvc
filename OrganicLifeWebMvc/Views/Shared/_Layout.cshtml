@@ -50,7 +50,15 @@
                     {
                         <li><a asp-area="" asp-controller="Produtos" asp-action="Index">Produtos</a></li>
                     }
-                    <li><a asp-area="" asp-controller="Vendas" asp-action="Index">Vendas</a></li>
+                    @if (SignInManager.IsSignedIn(User) && (await UserService.UserIsAdmin(User.Identity.Name) || await UserService.UserIsFornecedor(User.Identity.Name)))
+                    {
+                        <li><a asp-area="" asp-controller="Relatorios" asp-action="RelatorioVendas">Minhas Vendas</a></li>
+                    }
+                    @if (SignInManager.IsSignedIn(User) && (await UserService.UserIsAdmin(User.Identity.Name) || await UserService.UserIsCliente(User.Identity.Name)))
+                    {
+                        <li><a asp-area="" asp-controller="Relatorios" asp-action="RelatorioCompras">Minhas compras</a></li>
+                    }
+                    <li><a asp-area="" asp-controller="Vendas" asp-action="Index">Produtores</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Sobre</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contato</a></li>
                 </ul>

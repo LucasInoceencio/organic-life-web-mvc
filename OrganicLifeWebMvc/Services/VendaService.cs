@@ -132,6 +132,34 @@ namespace OrganicLifeWebMvc.Services
                 .ToListAsync();
         }
 
+        public async Task<List<Venda>> FindAllWithAssociationByFornecedorAsync(int idFornecedor)
+        {
+            return await _applicationDbContext.Venda
+                .Include(ic => ic.Fornecedor)
+                .Include(ic => ic.Fornecedor.PessoaJuridica)
+                .Include(ic => ic.Fornecedor.PessoaJuridica.Endereco)
+                .Include(ic => ic.Fornecedor.PessoaJuridica.Responsavel)
+                .Include(ic => ic.Cliente)
+                .Include(ic => ic.Cliente.Pessoa)
+                .Include(ic => ic.Cliente.Pessoa.Endereco)
+                .Where(wh => !wh.Deletado && wh.Fornecedor.Id == idFornecedor)
+                .ToListAsync();
+        }
+
+        public async Task<List<Venda>> FindAllWithAssociationByClienteAsync(int idCliente)
+        {
+            return await _applicationDbContext.Venda
+                .Include(ic => ic.Fornecedor)
+                .Include(ic => ic.Fornecedor.PessoaJuridica)
+                .Include(ic => ic.Fornecedor.PessoaJuridica.Endereco)
+                .Include(ic => ic.Fornecedor.PessoaJuridica.Responsavel)
+                .Include(ic => ic.Cliente)
+                .Include(ic => ic.Cliente.Pessoa)
+                .Include(ic => ic.Cliente.Pessoa.Endereco)
+                .Where(wh => !wh.Deletado && wh.Cliente.Id == idCliente)
+                .ToListAsync();
+        }
+
         public async Task<bool> VendaExistAsync(int id)
         {
             return await _applicationDbContext.Venda.AnyAsync(an => an.Id == id);

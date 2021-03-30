@@ -17,6 +17,17 @@ namespace OrganicLifeWebMvc.Services
             _applicationDbContext = applicationDbContext;
         }
 
+        public async Task<Cliente> GetClienteByUser(ApplicationUser user)
+        {
+            if (user == null || user.Pessoa == null || user.Pessoa.Id <= 0)
+                throw new NotFoundException("Id not found!");
+
+            var result = await _applicationDbContext.Cliente
+                .Include(ic => ic.Pessoa)
+                .ToListAsync();
+            return result.Where(wh => wh.Pessoa.Id == user.Pessoa.Id).FirstOrDefault();
+        }
+
         public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente)
         {
             _applicationDbContext.Cliente.Add(cliente);
