@@ -47,6 +47,7 @@ namespace OrganicLifeWebMvc
             services.AddScoped<ClienteService>();
             services.AddScoped<FornecedorService>();
             services.AddScoped<VendaService>();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

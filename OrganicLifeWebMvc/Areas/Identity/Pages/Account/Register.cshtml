@@ -12,6 +12,8 @@
             <h4>Criar nova conta.</h4>
             <hr />
             <div>
+                <label>Tipo usuário</label>
+                <br />
                 Fornecedor
                 @Html.RadioButtonFor(model => model.Input.TipoUsuario, "Fornecedor")
                 Cliente
@@ -19,6 +21,7 @@
 
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="Input.NomeFantasia">Nome Fantasia</label>
                 <input asp-for="Input.NomeFantasia" class="form-control" />
