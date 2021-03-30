@@ -1,11 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models.ViewModels;
 using System.Diagnostics;
+using System.Linq;
 
 namespace OrganicLifeWebMvc.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _applicationDbContext;
+
+        public HomeController(ApplicationDbContext applicationDbContext)
+        {
+            _applicationDbContext = applicationDbContext;
+        }
+
         public IActionResult Index()
         {
             return View();

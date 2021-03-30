@@ -63,6 +63,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
             [Display(Name = "Tipo Usuário")]
             public string TipoUsuario { get; set; }
 

@@ -11,21 +11,31 @@ namespace OrganicLifeWebMvc.Views
     public class FornecedoresController : Controller
     {
         private readonly FornecedorService _fornecedorService;
+        private readonly UserService _userService;
 
-        public FornecedoresController(FornecedorService fornecedorService)
+        public FornecedoresController(FornecedorService fornecedorService, UserService userService)
         {
             _fornecedorService = fornecedorService;
+            _userService = userService;
         }
 
         // GET: Fornecedors
         public async Task<IActionResult> Index()
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             return View(await _fornecedorService.FindAllWithAssociationAsync());
         }
 
         // GET: Fornecedors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             if (id == null)
             {
                 return NotFound();
@@ -42,8 +52,12 @@ namespace OrganicLifeWebMvc.Views
         }
 
         // GET: Fornecedors/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 
@@ -54,6 +68,10 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Fornecedor fornecedor)
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             if (ModelState.IsValid)
             {
                 await _fornecedorService.InsertAsync(fornecedor);
@@ -65,6 +83,10 @@ namespace OrganicLifeWebMvc.Views
         // GET: Fornecedors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             if (id == null)
             {
                 return NotFound();
@@ -86,6 +108,10 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Fornecedor fornecedor)
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             if (id != fornecedor.Id)
             {
                 return NotFound();
@@ -117,6 +143,10 @@ namespace OrganicLifeWebMvc.Views
         // GET: Fornecedors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             if (id == null)
             {
                 return NotFound();
@@ -137,6 +167,10 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+
             var fornecedor = await _fornecedorService.FindByIdAsync(id);
             await _fornecedorService.DeleteAsync(fornecedor);
             return RedirectToAction(nameof(Index));
