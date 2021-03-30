@@ -29,7 +29,7 @@ namespace OrganicLifeWebMvc.Services
             if (string.IsNullOrWhiteSpace(idUser))
                 return false;
 
-            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.Id == idUser);
+            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.UserName == idUser);
             if (user == null)
                 return false;
 
@@ -44,7 +44,7 @@ namespace OrganicLifeWebMvc.Services
             if (string.IsNullOrWhiteSpace(idUser))
                 return false;
 
-            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.Id == idUser);
+            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.UserName == idUser);
             if (user == null)
                 return false;
 
@@ -59,7 +59,7 @@ namespace OrganicLifeWebMvc.Services
             if (string.IsNullOrWhiteSpace(idUser))
                 return false;
 
-            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.Id == idUser);
+            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.UserName == idUser);
             if (user == null)
                 return false;
 
@@ -74,7 +74,7 @@ namespace OrganicLifeWebMvc.Services
             if (string.IsNullOrWhiteSpace(idUser))
                 return "";
 
-            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.Id == idUser);
+            var user = await _applicationDbContext.Users.SingleOrDefaultAsync(sg => sg.UserName == idUser);
             if (user == null)
                 return "";
 
