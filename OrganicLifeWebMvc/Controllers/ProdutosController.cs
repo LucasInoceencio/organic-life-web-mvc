@@ -91,7 +91,7 @@ namespace OrganicLifeWebMvc.Views
 
             if (ModelState.IsValid)
             {
-                await _produtoService.InsertAsync(produto);
+                await _produtoService.InsertAsync(produto, user);
                 return RedirectToAction(nameof(Index));
             }
             return View(produto);
@@ -138,7 +138,7 @@ namespace OrganicLifeWebMvc.Views
             {
                 try
                 {
-                    await _produtoService.UpdateAsync(produto);
+                    await _produtoService.UpdateAsync(produto, user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -189,7 +189,7 @@ namespace OrganicLifeWebMvc.Views
                 return RedirectToAction("Index", "Home");
 
             var produto = await _produtoService.FindByIdWithAssociationAsync(id);
-            await _produtoService.DeleteSoftAsync(produto);
+            await _produtoService.DeleteSoftAsync(produto, user);
             return RedirectToAction(nameof(Index));
         }
     }

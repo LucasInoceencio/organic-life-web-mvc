@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OrganicLifeWebMvc.Data;
 using OrganicLifeWebMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,15 +29,27 @@ namespace OrganicLifeWebMvc.Services
             return result.Where(wh => wh.Pessoa.Id == user.Pessoa.Id).FirstOrDefault();
         }
 
-        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente)
+        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente, ApplicationUser userLogado)
         {
+            cliente.DataHoraCadastro = DateTime.Now;
+            cliente.ResponsavelCadastro = userLogado.UserName;
+            if (cliente.Pessoa.Id <= 0)
+            {
+                cliente.Pessoa.DataHoraCadastro = DateTime.Now;
+                cliente.Pessoa.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Pessoa.Add(cliente.Pessoa);
+            }
+            if (cliente.Pessoa.Endereco.Id <= 0)
+            {
+                cliente.Pessoa.Endereco.DataHoraCadastro = DateTime.Now;
+                cliente.Pessoa.Endereco.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Endereco.Add(cliente.Pessoa.Endereco);
+            }
             _applicationDbContext.Cliente.Add(cliente);
-            _applicationDbContext.Pessoa.Add(cliente.Pessoa);
-            _applicationDbContext.Endereco.Add(cliente.Pessoa.Endereco);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente)
+        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa,Endereco")] Cliente cliente, ApplicationUser userLogado)
         {
             bool hasAny = await _applicationDbContext.Cliente.AnyAsync(an => an.Id == cliente.Id);
             if (!hasAny)
@@ -46,9 +59,16 @@ namespace OrganicLifeWebMvc.Services
 
             try
             {
+                cliente.DataHoraAlteracao = DateTime.Now;
+                cliente.ResponsavelAlteracao = userLogado.UserName;
+                cliente.Pessoa.DataHoraAlteracao = DateTime.Now;
+                cliente.Pessoa.ResponsavelAlteracao = userLogado.UserName;
+                cliente.Pessoa.Endereco.DataHoraAlteracao = DateTime.Now;
+                cliente.Pessoa.Endereco.ResponsavelAlteracao = userLogado.UserName;
+
                 _applicationDbContext.Update(cliente);
                 _applicationDbContext.Update(cliente.Pessoa);
-                _applicationDbContext.Update(cliente.Pessoa);
+                _applicationDbContext.Update(cliente.Pessoa.Endereco);
                 await _applicationDbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)

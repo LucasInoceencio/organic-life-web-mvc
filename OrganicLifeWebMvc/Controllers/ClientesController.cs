@@ -77,7 +77,7 @@ namespace OrganicLifeWebMvc.Controllers
 
             if (ModelState.IsValid)
             {
-                await _clienteService.InsertAsync(cliente);
+                await _clienteService.InsertAsync(cliente, user);
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
@@ -123,7 +123,7 @@ namespace OrganicLifeWebMvc.Controllers
             {
                 try
                 {
-                    await _clienteService.UpdateAsync(cliente);
+                    await _clienteService.UpdateAsync(cliente, user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

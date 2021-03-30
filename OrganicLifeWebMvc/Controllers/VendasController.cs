@@ -25,23 +25,13 @@ namespace OrganicLifeWebMvc.Controllers
             _userService = userService;
         }
 
-        // GET: Vendas
         public async Task<IActionResult> Index()
         {
-            var user = await _userService.GetUserByName(User.Identity.Name);
-            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor"))
-                return RedirectToAction("Index", "Home");
-
             return View(await _fornecedorService.FindAllWithAssociationAsync());
         }
 
-        // GET: Vendas
         public async Task<IActionResult> ProdutosLista(int? id)
         {
-            var user = await _userService.GetUserByName(User.Identity.Name);
-            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor"))
-                return RedirectToAction("Index", "Home");
-
             if (id == null || id <= 0)
             {
                 return NotFound();

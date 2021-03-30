@@ -74,7 +74,7 @@ namespace OrganicLifeWebMvc.Views
 
             if (ModelState.IsValid)
             {
-                await _fornecedorService.InsertAsync(fornecedor);
+                await _fornecedorService.InsertAsync(fornecedor, user);
                 return RedirectToAction(nameof(Index));
             }
             return View(fornecedor);
@@ -121,7 +121,7 @@ namespace OrganicLifeWebMvc.Views
             {
                 try
                 {
-                    await _fornecedorService.UpdateAsync(fornecedor);
+                    await _fornecedorService.UpdateAsync(fornecedor, user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

@@ -18,23 +18,36 @@ namespace OrganicLifeWebMvc.Services
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor,Cliente")] Venda venda)
+        public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor,Cliente")] Venda venda, ApplicationUser userLogado)
         {
+            if (venda.Fornecedor.Id <= 0)
+            {
+                venda.Fornecedor.DataHoraCadastro = DateTime.Now;
+                venda.Fornecedor.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Fornecedor.Add(venda.Fornecedor);
+            }
+            if (venda.Cliente.Id <= 0)
+            {
+                venda.Cliente.DataHoraCadastro = DateTime.Now;
+                venda.Cliente.ResponsavelCadastro = userLogado.UserName;
+                _applicationDbContext.Cliente.Add(venda.Cliente);
+            }
             _applicationDbContext.Venda.Add(venda);
-            _applicationDbContext.Fornecedor.Add(venda.Fornecedor);
-            _applicationDbContext.Cliente.Add(venda.Cliente);
-            foreach(var produto in venda.Produtos)
+
+            foreach (var produto in venda.Produtos)
             {
                 _applicationDbContext.VendaProduto.Add(new VendaProduto()
                 {
                     Venda = venda,
-                    Produto = produto
+                    Produto = produto,
+                    DataHoraCadastro = DateTime.Now,
+                    ResponsavelCadastro = userLogado.UserName
                 });
             }
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor,Cliente")] Venda venda)
+        public async Task UpdateAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Fornecedor,Cliente")] Venda venda, ApplicationUser userLogado)
         {
             bool hasAny = await _applicationDbContext.Venda.AnyAsync(an => an.Id == venda.Id);
             if (!hasAny)
@@ -44,6 +57,8 @@ namespace OrganicLifeWebMvc.Services
 
             try
             {
+                venda.DataHoraAlteracao = DateTime.Now;
+                venda.ResponsavelAlteracao = userLogado.UserName;
                 _applicationDbContext.Update(venda);
                 _applicationDbContext.Update(venda.Fornecedor);
                 _applicationDbContext.Update(venda.Cliente);
@@ -55,7 +70,7 @@ namespace OrganicLifeWebMvc.Services
             }
         }
 
-        public async Task DeleteSoftAsync(Venda venda)
+        public async Task DeleteSoftAsync(Venda venda, ApplicationUser userLogado)
         {
             bool hasAny = await _applicationDbContext.Venda.AnyAsync(an => an.Id == venda.Id);
             if (!hasAny)
@@ -66,6 +81,8 @@ namespace OrganicLifeWebMvc.Services
             try
             {
                 venda.Deletado = true;
+                venda.DataHoraExclusao = DateTime.Now;
+                venda.ResponsavelExclusao = userLogado.UserName;
                 _applicationDbContext.Update(venda);
                 await _applicationDbContext.SaveChangesAsync();
             }
