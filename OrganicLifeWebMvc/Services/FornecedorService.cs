@@ -17,6 +17,19 @@ namespace OrganicLifeWebMvc.Services
             _applicationDbContext = applicationDbContext;
         }
 
+        public async Task<Fornecedor> GetFornecedorByUser(ApplicationUser user)
+        {
+            if(user == null || user.Pessoa == null || user.Pessoa.Id <= 0)
+                throw new NotFoundException("Id not found!");
+
+            var result = await _applicationDbContext.Fornecedor
+                .Include(ic => ic.PessoaJuridica)
+                .Include(ic => ic.PessoaJuridica.Endereco)
+                .Include(ic => ic.PessoaJuridica.Responsavel)
+                .ToListAsync();
+            return result.Where(wh => wh.PessoaJuridica.Responsavel.Id == user.Pessoa.Id).FirstOrDefault();
+        }
+
         public async Task InsertAsync([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco")] Fornecedor fornecedor)
         {
             _applicationDbContext.Fornecedor.Add(fornecedor);

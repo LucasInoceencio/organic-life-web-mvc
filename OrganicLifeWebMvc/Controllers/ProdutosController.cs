@@ -11,11 +11,13 @@ namespace OrganicLifeWebMvc.Views
     {
         private readonly ProdutoService _produtoService;
         private readonly UserService _userService;
+        private readonly FornecedorService _fornecedorService;
 
-        public ProdutosController(ProdutoService context, UserService userService)
+        public ProdutosController(ProdutoService context, UserService userService, FornecedorService fornecedorService)
         {
             _produtoService = context;
             _userService = userService;
+            _fornecedorService = fornecedorService;
         }
 
         private async Task<bool> ValidarUsuario()
@@ -33,17 +35,24 @@ namespace OrganicLifeWebMvc.Views
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
-            if(await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
-
-            return View(await _produtoService.FindAllWithAssociationAsync());
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if(user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
+            if (user.TipoUsuario.ToLower().Equals("admin"))
+                return View(await _produtoService.FindAllWithAssociationAsync());
+            else
+            {
+                var fornecedor = _fornecedorService.GetFornecedorByUser(user);
+                return View(await _produtoService.FindAllWithAssociationByFornecedor(fornecedor.Id));
+            }
         }
 
         // GET: Produtos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             if (id == null)
             {
@@ -62,8 +71,9 @@ namespace OrganicLifeWebMvc.Views
         // GET: Produtos/Create
         public async Task<IActionResult> Create()
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             return View();
         }
@@ -75,8 +85,9 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Sigla,Nome,Descricao,Valor,Categoria,Organico,Deletado,DataHoraExclusao,ResponsavelExclusao,Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Produto produto)
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             if (ModelState.IsValid)
             {
@@ -89,8 +100,9 @@ namespace OrganicLifeWebMvc.Views
         // GET: Produtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             if (id == null)
             {
@@ -113,8 +125,9 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Sigla,Nome,Descricao,Valor,Categoria,Organico,Deletado,DataHoraExclusao,ResponsavelExclusao,Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Produto produto)
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             if (id != produto.Id)
             {
@@ -147,8 +160,9 @@ namespace OrganicLifeWebMvc.Views
         // GET: Produtos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             if (id == null)
             {
@@ -170,8 +184,9 @@ namespace OrganicLifeWebMvc.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (await ValidarUsuario() == false)
-                RedirectToAction("Index", "Home");
+            var user = await _userService.GetUserByName(User.Identity.Name);
+            if (user == null || user.TipoUsuario.ToLower().Equals("cliente"))
+                return RedirectToAction("Index", "Home");
 
             var produto = await _produtoService.FindByIdWithAssociationAsync(id);
             await _produtoService.DeleteSoftAsync(produto);
