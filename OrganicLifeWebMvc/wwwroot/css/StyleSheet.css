@@ -211,11 +211,11 @@ body {
     }
 
     .siga-nos-div {
-        width:100px;
+        width: 100px;
     }
 
     .siga-div {
-        width:33%;
+        width: 33%;
     }
 
     .siga-nos-text {
@@ -224,8 +224,10 @@ body {
 
     .produto-container {
         flex-direction: column;
-        width:80%;
-
+        width: 80%;
     }
 
+    .img-home {
+        display:none;
+    }
 }
