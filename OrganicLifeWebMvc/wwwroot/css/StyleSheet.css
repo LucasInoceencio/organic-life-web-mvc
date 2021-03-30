@@ -128,8 +128,21 @@ body {
     width: 100%;
     }
 
-    /*Códigos Telas Create*/
+    /*Códigos Telas ProdutosLista*/
+    .produto-container {
+        padding: 20px;
+        width: 22%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
 
+    .card-produto {
+        width: 100%;
+        border-radius:5px;
+        border: 0.5px solid #DCDCDC;
+    }
 
 
 @media screen and (max-width: 700px) {
@@ -207,6 +220,12 @@ body {
 
     .siga-nos-text {
         text-align: center;
+    }
+
+    .produto-container {
+        flex-direction: column;
+        width:80%;
+
     }
 
 }

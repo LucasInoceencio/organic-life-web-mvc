@@ -10,20 +10,19 @@
 
     @foreach (var item in Model)
     {
-    <div style="padding:20px; width:22%; display:flex; flex-direction:row; justify-content:space-around; flex-wrap:wrap;">
-        <div class="card" style="width: 100%; border-radius:5px; border: 0.5px solid #DCDCDC;">
-            <img class="card-img-top" src="~/images/produtos-home2.jpg" alt="Card image cap" style="width:100%; height:auto; border-top-left-radius:5px; border-top-right-radius:5px;">
+    <div class="produto-container">
+        <div class="card-produto">
+            <img class="card-img-top" src="~/images/produtos-home2.jpg" alt="Card image cap">
             <div class="card-body" style="text-align:center;">
                 <h3 class="card-title">@Html.DisplayFor(modelItem => item.Nome)</h3>
                 <p>Categoria: @Html.DisplayFor(modelItem => item.Categoria)</p>
                 <p class="card-text">@Html.DisplayFor(modelItem => item.Descricao)</p>
                 <p>Organico @Html.DisplayFor(modelItem => item.Organico)</p>
                 <h3>R$@Html.DisplayFor(modelItem => item.Valor)</h3>
-                <a href="#" class="btn btn-success btn-sm">Comprar</a>
+                <a href="#" class="btn btn-success btn-sm" style="margin-bottom:5px;">Comprar</a>
             </div>
         </div>
-    </div>
-        
+    </div>        
     }
 </div>
 
