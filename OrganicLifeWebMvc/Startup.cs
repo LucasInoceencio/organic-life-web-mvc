@@ -33,7 +33,7 @@ namespace OrganicLifeWebMvc
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
-                    Configuration.GetConnectionString("DefaultConnection"), builder => 
+                    Configuration.GetConnectionString("DefaultConnection"), builder =>
                     builder.MigrationsAssembly("OrganicLifeWebMvc")));
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -48,8 +48,6 @@ namespace OrganicLifeWebMvc
             services.AddScoped<FornecedorService>();
             services.AddScoped<VendaService>();
             services.AddScoped<UserService>();
-            services.AddScoped<UserManager<ApplicationUser>>();
-            services.AddScoped<SignInManager<ApplicationUser>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
