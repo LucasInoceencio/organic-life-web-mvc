@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-OrganicLifeWebMvc-AED455C3-988B-4967-956C-55041E4F8EC5</UserSecretsId>
+    <StartupObject>OrganicLifeWebMvc.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

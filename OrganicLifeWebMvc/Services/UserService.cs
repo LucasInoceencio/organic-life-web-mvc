@@ -11,10 +11,34 @@ namespace OrganicLifeWebMvc.Services
     public class UserService
     {
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly FornecedorService _fornecedorService;
+        private readonly ClienteService _clienteService;
 
-        public UserService(ApplicationDbContext applicationDbContext)
+        public UserService(ApplicationDbContext applicationDbContext, FornecedorService fornecedorService, ClienteService clienteService)
         {
             _applicationDbContext = applicationDbContext;
+            _fornecedorService = fornecedorService;
+            _clienteService = clienteService;
+        }
+
+        public async Task<int> IdClienteOrFornecedorByUser(string name)
+        {
+            var user = await _applicationDbContext.Users.Include(ic => ic.Pessoa).Where(wh => wh.UserName.Equals(name)).FirstOrDefaultAsync();
+            if (user == null)
+                return 0;
+
+            if (user.TipoUsuario.ToLower().Equals("cliente"))
+            {
+                var cliente = await _clienteService.GetClienteByUser(user);
+                return cliente.Id;
+            }
+            if (user.TipoUsuario.ToLower().Equals("fornecedor"))
+            {
+                var fornecedor = await _fornecedorService.GetFornecedorByUser(user);
+                return fornecedor.Id;
+            }
+
+            return 0;
         }
 
         public async Task<ApplicationUser> GetUserByName(string name)

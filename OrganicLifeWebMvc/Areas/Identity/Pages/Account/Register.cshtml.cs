@@ -23,6 +23,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ClienteService _clienteService;
         private readonly FornecedorService _fornecedorService;
+        private readonly UserService _userService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -30,7 +31,8 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             ClienteService clienteService,
-            FornecedorService fornecedorService)
+            FornecedorService fornecedorService,
+            UserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +40,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _clienteService = clienteService;
             _fornecedorService = fornecedorService;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -99,6 +102,8 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+                var userSystem = await _userService.GetUserByName("system@organiclife.com.br");
+
                 var endereco = new Endereco()
                 {
                     Logradouro = Input.Logradouro,
@@ -141,7 +146,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
                         PessoaJuridica = pessoaJuridica
                     };
 
-                    await _fornecedorService.InsertAsync(fornecedor, new ApplicationUser() { Id = "system@organiclife.com.br"});
+                    await _fornecedorService.InsertAsync(fornecedor, userSystem);
                 }
                 if (!string.IsNullOrWhiteSpace(Input.TipoUsuario) && Input.TipoUsuario.ToLower().Equals("cliente"))
                 {
@@ -150,7 +155,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
                         Pessoa = pessoaFisica
                     };
 
-                    await _clienteService.InsertAsync(cliente, new ApplicationUser() { Id = "system@organiclife.com.br" });
+                    await _clienteService.InsertAsync(cliente, userSystem);
                 }
 
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, TipoUsuario = Input.TipoUsuario, Pessoa = pessoaFisica };

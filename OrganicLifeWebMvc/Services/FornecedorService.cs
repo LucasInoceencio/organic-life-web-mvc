@@ -125,11 +125,12 @@ namespace OrganicLifeWebMvc.Services
 
         public async Task<Fornecedor> FindByIdWithAssociationAsync(int id)
         {
-            return await _applicationDbContext.Fornecedor
+            var result = await _applicationDbContext.Fornecedor
                 .Include(ic => ic.PessoaJuridica)
                 .Include(ic => ic.PessoaJuridica.Endereco)
                 .Include(ic => ic.PessoaJuridica.Responsavel)
                 .SingleOrDefaultAsync(sg => sg.Id == id);
+            return result;
         }
 
         public async Task<List<Fornecedor>> FindAllWithAssociationAsync()

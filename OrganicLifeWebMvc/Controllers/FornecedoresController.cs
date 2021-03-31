@@ -84,6 +84,18 @@ namespace OrganicLifeWebMvc.Views
         public async Task<IActionResult> Edit(int? id)
         {
             var user = await _userService.GetUserByName(User.Identity.Name);
+
+            var idFornecedor = await _userService.IdClienteOrFornecedorByUser(user.UserName);
+            if (idFornecedor > 0 && idFornecedor == id)
+            {
+                var fornecedorLogado = await _fornecedorService.FindByIdWithAssociationAsync((int)id);
+                if (fornecedorLogado == null)
+                {
+                    return NotFound();
+                }
+                return View(fornecedorLogado);
+            }
+
             if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
                 return RedirectToAction("Index", "Home");
 
@@ -106,11 +118,13 @@ namespace OrganicLifeWebMvc.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco,Pessoa,PessoaJuridica.Pessoa")] Fornecedor fornecedor)
         {
             var user = await _userService.GetUserByName(User.Identity.Name);
-            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
-                return RedirectToAction("Index", "Home");
+            var idFornecedor = await _userService.IdClienteOrFornecedorByUser(user.UserName);
+            if(idFornecedor != id)
+                if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                    return RedirectToAction("Index", "Home");
 
             if (id != fornecedor.Id)
             {

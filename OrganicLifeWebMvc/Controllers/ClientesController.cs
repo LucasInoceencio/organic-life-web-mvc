@@ -87,6 +87,17 @@ namespace OrganicLifeWebMvc.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             var user = await _userService.GetUserByName(User.Identity.Name);
+            var idCliente = await _userService.IdClienteOrFornecedorByUser(user.UserName);
+            if(idCliente > 0 && idCliente == id)
+            {
+                var clienteLogado = await _clienteService.FindByIdWithAssociationAsync((int)id);
+                if (clienteLogado == null)
+                {
+                    return NotFound();
+                }
+                return View(clienteLogado);
+            }
+
             if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
                 return RedirectToAction("Index", "Home");
 
@@ -108,11 +119,14 @@ namespace OrganicLifeWebMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,Pessoa")] Cliente cliente)
         {
             var user = await _userService.GetUserByName(User.Identity.Name);
-            if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
-                return RedirectToAction("Index", "Home");
+            var idCliente = await _userService.IdClienteOrFornecedorByUser(user.UserName);
+
+            if(idCliente != id)
+                if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
+                    return RedirectToAction("Index", "Home");
 
             if (id != cliente.Id)
             {

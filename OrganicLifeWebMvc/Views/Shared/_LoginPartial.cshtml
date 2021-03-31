@@ -1,14 +1,44 @@
 @using Microsoft.AspNetCore.Identity
+@using OrganicLifeWebMvc.Services
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject UserService UserService
 
-@if (SignInManager.IsSignedIn(User))
+@if (SignInManager.IsSignedIn(User) && await UserService.UserIsCliente(User.Identity.Name))
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Oi @UserManager.GetUserName(User)!</a>
+                <a asp-area="" asp-controller="Clientes" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">Oi @UserManager.GetUserName(User)!</a>
+            </li>
+
+            <li>
+
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>
+            </li>
+        </ul>
+    </form>
+}
+else if (SignInManager.IsSignedIn(User) && await UserService.UserIsFornecedor(User.Identity.Name))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-area="" asp-controller="Fornecedores" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">Oi @UserManager.GetUserName(User)!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>
+            </li>
+        </ul>
+    </form>
+}
+else if (SignInManager.IsSignedIn(User) && await UserService.UserIsAdmin(User.Identity.Name))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a  title="Manage">Oi @UserManager.GetUserName(User)!</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>
@@ -19,7 +49,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register"><img class="img-home"src="~/images/edit-11-16.png" style="width:20%; height:auto;" />Registrar</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Register"><img class="img-home" src="~/images/edit-11-16.png" style="width:20%; height:auto;" />Registrar</a></li>
         <li><a asp-area="Identity" asp-page="/Account/Login" style="width:100px;"><img class="img-home" src="~/images/login.png" style="width:18%; height:auto;" /> Entrar</a></li>
     </ul>
 }
