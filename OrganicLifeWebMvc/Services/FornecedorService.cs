@@ -84,10 +84,20 @@ namespace OrganicLifeWebMvc.Services
                 fornecedor.PessoaJuridica.Responsavel.Endereco.DataHoraAlteracao = DateTime.Now;
                 fornecedor.PessoaJuridica.Responsavel.Endereco.ResponsavelAlteracao = userLogado.UserName;
 
-                _applicationDbContext.Update(fornecedor);
-                _applicationDbContext.Update(fornecedor.PessoaJuridica);
+
                 _applicationDbContext.Update(fornecedor.PessoaJuridica.Endereco);
-                await _applicationDbContext.SaveChangesAsync();
+                _applicationDbContext.Update(fornecedor.PessoaJuridica);
+                _applicationDbContext.Update(fornecedor);
+                bool tracking = _applicationDbContext.ChangeTracker.Entries<Fornecedor>().Any(x => x.Entity.Id == fornecedor.Id);
+                if (tracking)
+                {
+                    await _applicationDbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    _applicationDbContext.Update(fornecedor);
+                    await _applicationDbContext.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException ex)
             {

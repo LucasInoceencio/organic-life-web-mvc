@@ -79,8 +79,6 @@ namespace OrganicLifeWebMvc.Services
                     _applicationDbContext.Update(cliente);
                     await _applicationDbContext.SaveChangesAsync();
                 }
-                
-                
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -98,7 +96,7 @@ namespace OrganicLifeWebMvc.Services
             }
             catch (DbUpdateException)
             {
-                throw new IntegrityException("Can't delete customer because he/se has sales.");
+                throw new IntegrityException("Can't delete customer because he/she has sales.");
             }
         }
 

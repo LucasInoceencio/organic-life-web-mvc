@@ -11,7 +11,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;" />Carrinho</a></li>
             <li>
-                <a asp-area="" asp-controller="Clientes" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">Oi @UserManager.GetUserName(User)!</a>
+                <a asp-area="" asp-controller="Clientes" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">@UserManager.GetUserName(User)!</a>
             </li>
             <li>
 
@@ -26,7 +26,7 @@ else if (SignInManager.IsSignedIn(User) && await UserService.UserIsFornecedor(Us
         <ul class="nav navbar-nav navbar-right">
             <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;" />Carrinho</a></li>
             <li>
-                <a asp-area="" asp-controller="Fornecedores" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">Oi @UserManager.GetUserName(User)!</a>
+                <a asp-area="" asp-controller="Fornecedores" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">@UserManager.GetUserName(User)!</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>

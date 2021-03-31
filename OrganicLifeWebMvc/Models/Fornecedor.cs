@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrganicLifeWebMvc.Models
 {
+
+    [BindProperties(SupportsGet = true)]
     public class Fornecedor : EntidadeBase
     {
+        [BindProperty]
         public PessoaJuridica PessoaJuridica { get; set; }
         public ICollection<Produto> Produtos { get; set; } = new List<Produto>();
         public ICollection<Venda> Vendas { get; set; } = new List<Venda>();

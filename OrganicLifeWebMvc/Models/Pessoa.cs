@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace OrganicLifeWebMvc.Models
@@ -15,6 +16,7 @@ namespace OrganicLifeWebMvc.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DataNascimento { get; set; }
 
+        [BindProperty]
         public Endereco Endereco { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]

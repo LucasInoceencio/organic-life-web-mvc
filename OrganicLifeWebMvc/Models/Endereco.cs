@@ -1,7 +1,10 @@
 ﻿
 
+using Microsoft.AspNetCore.Mvc;
+
 namespace OrganicLifeWebMvc.Models
 {
+    [BindProperties(SupportsGet = true)]
     public class Endereco : EntidadeBase
     {
         public string Logradouro { get; set; }

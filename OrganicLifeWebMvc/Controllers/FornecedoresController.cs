@@ -66,7 +66,7 @@ namespace OrganicLifeWebMvc.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao")] Fornecedor fornecedor)
+        public async Task<IActionResult> Create([Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica")] Fornecedor fornecedor)
         {
             var user = await _userService.GetUserByName(User.Identity.Name);
             if (user == null || user.TipoUsuario.ToLower().Equals("fornecedor") || user.TipoUsuario.ToLower().Equals("cliente"))
@@ -118,7 +118,7 @@ namespace OrganicLifeWebMvc.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica,Endereco,Pessoa,PessoaJuridica.Pessoa")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHoraCadastro,ResponsavelCadastro,DataHoraAlteracao,ResponsavelAlteracao,PessoaJuridica")]Fornecedor fornecedor)
         {
             var user = await _userService.GetUserByName(User.Identity.Name);
             var idFornecedor = await _userService.IdClienteOrFornecedorByUser(user.UserName);
@@ -135,7 +135,14 @@ namespace OrganicLifeWebMvc.Views
             {
                 try
                 {
-                    await _fornecedorService.UpdateAsync(fornecedor, user);
+                    var fornecedorAtual = await _fornecedorService.FindByIdWithAssociationAsync(fornecedor.Id);
+                    fornecedorAtual.PessoaJuridica.NomeFantasia = fornecedor.PessoaJuridica.NomeFantasia;
+                    fornecedorAtual.PessoaJuridica.RazaoSocial = fornecedor.PessoaJuridica.RazaoSocial;
+                    fornecedorAtual.PessoaJuridica.Cnpj = fornecedor.PessoaJuridica.Cnpj;
+                    fornecedorAtual.PessoaJuridica.Celular = fornecedor.PessoaJuridica.Celular;
+                    fornecedorAtual.PessoaJuridica.Telefone = fornecedor.PessoaJuridica.Telefone;
+                    fornecedorAtual.PessoaJuridica.Email = fornecedor.PessoaJuridica.Email;
+                    await _fornecedorService.UpdateAsync(fornecedorAtual, user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
