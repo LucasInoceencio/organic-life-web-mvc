@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Organic Life</title>
+    <title>Organic Life</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-flatly.css" />
@@ -20,12 +20,11 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container" style="width:95%;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -56,12 +55,12 @@
                     }
                     @if (SignInManager.IsSignedIn(User) && (await UserService.UserIsAdmin(User.Identity.Name) || await UserService.UserIsCliente(User.Identity.Name)))
                     {
-                        <li><a asp-area="" asp-controller="Relatorios" asp-action="RelatorioCompras">Minhas compras</a></li>
+                        <li><a asp-area="" asp-controller="Relatorios" asp-action="RelatorioCompras">Minhas Compras</a></li>
                     }
                     <li><a asp-area="" asp-controller="Vendas" asp-action="Index">Produtores</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Sobre</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contato</a></li>
-                </ul>
+                </ul>              
                 <partial name="_LoginPartial" />
             </div>
         </div>
