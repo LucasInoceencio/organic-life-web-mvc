@@ -9,10 +9,10 @@
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;" />Carrinho</a></li>
             <li>
                 <a asp-area="" asp-controller="Clientes" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">Oi @UserManager.GetUserName(User)!</a>
             </li>
-
             <li>
 
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>
@@ -24,6 +24,7 @@ else if (SignInManager.IsSignedIn(User) && await UserService.UserIsFornecedor(Us
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;" />Carrinho</a></li>
             <li>
                 <a asp-area="" asp-controller="Fornecedores" asp-action="Edit" asp-route-id="@await UserService.IdClienteOrFornecedorByUser(User.Identity.Name)" title="Manage">Oi @UserManager.GetUserName(User)!</a>
             </li>
@@ -39,7 +40,7 @@ else if (SignInManager.IsSignedIn(User) && await UserService.UserIsAdmin(User.Id
         <ul class="nav navbar-nav navbar-right">
             <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;" />Carrinho</a></li>
             <li>
-                <a  title="Manage">Oi @UserManager.GetUserName(User)!</a>
+                <a  title="Manage">@UserManager.GetUserName(User)!</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>
