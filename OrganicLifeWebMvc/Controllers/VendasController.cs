@@ -29,6 +29,10 @@ namespace OrganicLifeWebMvc.Controllers
         {
             return View(await _fornecedorService.FindAllWithAssociationAsync());
         }
+        public async Task<IActionResult> Carrinho()
+        {
+            return View(await _vendaService.FindAllWithAssociationAsync());
+        }
 
         public async Task<IActionResult> ProdutosLista(int? id)
         {

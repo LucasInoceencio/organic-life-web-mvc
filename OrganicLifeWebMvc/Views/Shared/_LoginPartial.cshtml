@@ -37,6 +37,7 @@ else if (SignInManager.IsSignedIn(User) && await UserService.UserIsAdmin(User.Id
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;" />Carrinho</a></li>
             <li>
                 <a  title="Manage">Oi @UserManager.GetUserName(User)!</a>
             </li>
@@ -48,8 +49,9 @@ else if (SignInManager.IsSignedIn(User) && await UserService.UserIsAdmin(User.Id
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register"><img class="img-home" src="~/images/edit-11-16.png" style="width:20%; height:auto;" />Registrar</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login" style="width:100px;"><img class="img-home" src="~/images/login.png" style="width:18%; height:auto;" /> Entrar</a></li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    <li><a asp-area="" asp-controller="Vendas" asp-action="Carrinho"><img src="~/images/cart.png" style="padding-right:2px;"/>Carrinho</a></li>   
+    <li><a asp-area="Identity" asp-page="/Account/Register"><img class="img-home" src="~/images/edit-11-16.png" style="width:20%; height:auto;" />Registrar</a></li>
+    <li><a asp-area="Identity" asp-page="/Account/Login" style="width:100px;"><img class="img-home" src="~/images/login.png" style="width:18%; height:auto;" /> Entrar</a></li>
+</ul>
 }

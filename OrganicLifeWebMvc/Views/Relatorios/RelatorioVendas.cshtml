@@ -4,28 +4,28 @@
     ViewData["Title"] = "RelatorioVendas";
 }
 
-<h2>Relatório vendas</h2>
+<h2 style="text-align:center; padding:10px;">Minhas Vendas</h2>
 
-<table class="table">
+<table class="table table-striped" style="margin-top:50px;">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente.Pessoa.Nome)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ValorTotal)
+                Valor Total
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ValorDesconto)
+                Desconto
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TaxaEntrega)
+                Taxa de Entrega
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MeioPagamento)
+                Forma de Pagamento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pago)
+                Status
             </th>
         </tr>
     </thead>
