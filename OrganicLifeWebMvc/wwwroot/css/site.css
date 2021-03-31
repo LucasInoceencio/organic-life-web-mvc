@@ -29,6 +29,10 @@ body {
     margin: 15px;
 }
 
+.visible {
+    overflow: visible
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 600px) {
  

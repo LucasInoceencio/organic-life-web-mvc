@@ -90,6 +90,7 @@ namespace OrganicLifeWebMvc.Areas.Identity.Pages.Account
             public string Telefone { get; set; }
             [Required]
             public string Celular { get; set; }
+            public bool IsFornecedor { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
